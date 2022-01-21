@@ -3,6 +3,7 @@ div.stack {
   position: relative;
   width: 3em;
   height: 3em;
+  background: inherit;
 }
 
 div.stack > img {
@@ -11,5 +12,5 @@ div.stack > img {
   top: 0;
   width: 100%;
   height: 100%;
-  background: white;
+  background: inherit;
 }

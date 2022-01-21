@@ -1,1 +1,11 @@
-h1 { color: red; }
+
+.square {
+
+}
+
+.square.square-l {
+  background: #eeeeee;
+}
+.square.square-d {
+  background: #cccccc;
+}

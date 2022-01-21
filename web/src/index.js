@@ -7,13 +7,14 @@ import './index.css';
 class Square extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { value: props["value"]  };
   }
   render() {
     return (
-      <span className="square">
-        <span>{ this.state.value }</span>
-        <Bishop/>
+      <span className={ "square square-" + this.props.background }>
+        <Bishop
+          team={ this.props.team }
+          pieces={ this.props.pieces }
+        />
       </span>
     );
   }
@@ -28,7 +29,11 @@ class Board extends React.Component {
     for (var i=0; i < size; i++) {
       grid[i] = [];
       for (var j=0; j < size; j++) {
-        grid[i][j] = "hello";
+        grid[i][j] = {
+            "team": i == 0 ? "d" : i == size - 1 ? "l" : null,
+            "pieces": (i == 0 || i == size - 1) ? ["b", "k"]: [],
+            "background": (i+j)%2 ? "d" : "l"
+        };
       }
     }
 
@@ -46,7 +51,11 @@ class Board extends React.Component {
             <div className="row">
               {
                 row.map((square) => (
-                  <Square value={ square } />
+                  <Square
+                    team={ square.team }
+                    pieces={ square.pieces }
+                    background={ square.background }
+                  />
                 ))
               }
             </div>
