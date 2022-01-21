@@ -1,14 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Bishop } from './ImageMixer';
 import './index.css';
 
 
 class Square extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { value: props["value"]  };
+  }
   render() {
     return (
-      <button className="square">
-        {/* TODO */}
-      </button>
+      <span className="square">
+        <span>{ this.state.value }</span>
+        <Bishop/>
+      </span>
     );
   }
 }
@@ -37,10 +43,10 @@ class Board extends React.Component {
         hello world
         {
           this.state.grid.map((row) => (
-            <div class="row">
+            <div className="row">
               {
                 row.map((square) => (
-                  <em>{ square }</em>
+                  <Square value={ square } />
                 ))
               }
             </div>
