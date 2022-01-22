@@ -1,6 +1,5 @@
 /* eslint-disable max-classes-per-file */
 /* eslint-disable react/prefer-stateless-function */
-/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-nested-ternary */
@@ -23,44 +22,51 @@ class Square extends React.Component {
   }
 }
 
+function makeArray(start, lessThan) {
+  const a = [];
+  for (let i = start; i < lessThan; ++i) {
+    a.push(i);
+  }
+  return a;
+}
+
 class Board extends React.Component {
   constructor(props) {
     super(props);
 
     const size = 4;
-    const grid = [];
-    for (let i = 0; i < size; i++) {
-      grid[i] = [];
-      for (let j = 0; j < size; j++) {
-        grid[i][j] = {
-          team: i === 0 ? 'd' : i === size - 1 ? 'l' : null,
-          pieces: (i === 0 || i === size - 1) ? ['b', 'k'] : [],
-          background: (i + j) % 2 ? 'd' : 'l',
-        };
-      }
-    }
 
     this.state = {
-      grid,
+      size,
     };
   }
 
+  square(i, j) {
+    const { size } = this.state;
+    return (
+      <Square
+        key={j}
+        team={i === 0 ? 'd' : i === size - 1 ? 'l' : null}
+        pieces={(i === 0 || i === size - 1) ? ['b', 'k'] : []}
+        background={(i + j) % 2 ? 'd' : 'l'}
+      />
+    );
+  }
+
   render() {
-    const { grid } = this.state;
+    const { size } = this.state;
+
+    const rowHeaders = makeArray(0, size);
+    const colHeaders = makeArray(0, size);
+
     return (
       <div>
         hello world
         {
-          grid.map((row) => (
-            <div className="row">
+          rowHeaders.map((i) => (
+            <div className="row" key={i}>
               {
-                row.map((square) => (
-                  <Square
-                    team={square.team}
-                    pieces={square.pieces}
-                    background={square.background}
-                  />
-                ))
+                colHeaders.map((j) => this.square(i, j))
               }
             </div>
           ))

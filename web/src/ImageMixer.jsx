@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/prefer-stateless-function */
-/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/prop-types */
 /* eslint-disable import/prefer-default-export */
 
