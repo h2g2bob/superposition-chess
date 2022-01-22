@@ -22,9 +22,13 @@ class Square extends React.Component {
 }
 
 Square.propTypes = {
-  team: PropTypes.string.isRequired,
+  team: PropTypes.string,
   pieces: PropTypes.arrayOf(PropTypes.string).isRequired,
   background: PropTypes.string.isRequired,
+};
+
+Square.defaultProps = {
+  team: null,
 };
 
 function makeArray(start, lessThan) {

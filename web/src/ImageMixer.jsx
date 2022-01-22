@@ -57,8 +57,12 @@ class ImageMixer extends React.Component {
 }
 
 ImageMixer.propTypes = {
-  team: PropTypes.string.isRequired,
+  team: PropTypes.string,
   pieces: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
+
+ImageMixer.defaultProps = {
+  team: null,
 };
 
 export default ImageMixer;
