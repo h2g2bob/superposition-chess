@@ -3,17 +3,13 @@ import ReactDOM from 'react-dom';
 import { Bishop } from './ImageMixer';
 import './index.css';
 
-
 class Square extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
-      <span className={ "square square-" + this.props.background }>
+      <span className={`square square-${this.props.background}`}>
         <Bishop
-          team={ this.props.team }
-          pieces={ this.props.pieces }
+          team={this.props.team}
+          pieces={this.props.pieces}
         />
       </span>
     );
@@ -25,21 +21,21 @@ class Board extends React.Component {
     super(props);
 
     const size = 4;
-    var grid = [];
-    for (var i=0; i < size; i++) {
+    const grid = [];
+    for (let i = 0; i < size; i++) {
       grid[i] = [];
-      for (var j=0; j < size; j++) {
+      for (let j = 0; j < size; j++) {
         grid[i][j] = {
-            "team": i == 0 ? "d" : i == size - 1 ? "l" : null,
-            "pieces": (i == 0 || i == size - 1) ? ["b", "k"]: [],
-            "background": (i+j)%2 ? "d" : "l"
+          team: i == 0 ? 'd' : i == size - 1 ? 'l' : null,
+          pieces: (i == 0 || i == size - 1) ? ['b', 'k'] : [],
+          background: (i + j) % 2 ? 'd' : 'l',
         };
       }
     }
 
     this.state = {
-      grid: grid,
-    }
+      grid,
+    };
   }
 
   render() {
@@ -52,9 +48,9 @@ class Board extends React.Component {
               {
                 row.map((square) => (
                   <Square
-                    team={ square.team }
-                    pieces={ square.pieces }
-                    background={ square.background }
+                    team={square.team}
+                    pieces={square.pieces}
+                    background={square.background}
                   />
                 ))
               }
@@ -66,9 +62,7 @@ class Board extends React.Component {
   }
 }
 
-
 ReactDOM.render(
   <Board />,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
-
