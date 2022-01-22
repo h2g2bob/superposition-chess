@@ -9,9 +9,11 @@ import './index.css';
 
 class Square extends React.Component {
   render() {
-    const { team, pieces, background } = this.props;
+    const {
+      team, pieces, background, selected,
+    } = this.props;
     return (
-      <span className={`square square-${background}`}>
+      <span className={`square square-${background} square-selected-${selected}`}>
         <ImageMixer
           team={team}
           pieces={pieces}
@@ -25,6 +27,7 @@ Square.propTypes = {
   team: PropTypes.string,
   pieces: PropTypes.arrayOf(PropTypes.string).isRequired,
   background: PropTypes.string.isRequired,
+  selected: PropTypes.bool.isRequired,
 };
 
 Square.defaultProps = {
@@ -61,9 +64,12 @@ class Board extends React.Component {
       });
     });
 
+    const selectedSquare = [3, 1];
+
     this.state = {
       pieces,
       size,
+      selectedSquare,
     };
   }
 
@@ -75,12 +81,14 @@ class Board extends React.Component {
 
   square(i, j) {
     const piece = this.pieceAt(i, j);
+    const { selectedSquare } = this.state;
     return (
       <Square
         key={j}
         team={piece ? piece.team : null}
         pieces={piece ? piece.choices : []}
         background={(i + j) % 2 ? 'd' : 'l'}
+        selected={selectedSquare === [i, j]}
       />
     );
   }
