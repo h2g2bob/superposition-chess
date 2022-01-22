@@ -1,6 +1,8 @@
 /* eslint-disable max-classes-per-file */
 /* eslint-disable react/prefer-stateless-function */
 /* eslint-disable no-plusplus */
+/* eslint-disable jsx-a11y/interactive-supports-focus */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -10,10 +12,14 @@ import './index.css';
 class Square extends React.Component {
   render() {
     const {
-      team, pieces, background, selected,
+      team, pieces, background, isSelected, selectSquareFunc,
     } = this.props;
     return (
-      <span className={`square square-${background} square-selected-${selected}`}>
+      <span
+        className={`square square-${background} square-selected-${isSelected}`}
+        onClick={selectSquareFunc}
+        role="button"
+      >
         <ImageMixer
           team={team}
           pieces={pieces}
@@ -27,7 +33,8 @@ Square.propTypes = {
   team: PropTypes.string,
   pieces: PropTypes.arrayOf(PropTypes.string).isRequired,
   background: PropTypes.string.isRequired,
-  selected: PropTypes.bool.isRequired,
+  isSelected: PropTypes.bool.isRequired,
+  selectSquareFunc: PropTypes.func.isRequired,
 };
 
 Square.defaultProps = {
@@ -64,7 +71,7 @@ class Board extends React.Component {
       });
     });
 
-    const selectedSquare = [3, 1];
+    const selectedSquare = [null, null];
 
     this.state = {
       pieces,
@@ -72,6 +79,16 @@ class Board extends React.Component {
       selectedSquare,
     };
   }
+
+  selectSquare(i, j) {
+    this.setState(() => ({ selectedSquare: [i, j] }));
+  }
+
+  /*
+  unSelectSquare () {
+    this.setState(() => {selectedSquare: [null, null]});
+  }
+  */
 
   pieceAt(i, j) {
     const { pieces } = this.state;
@@ -82,13 +99,15 @@ class Board extends React.Component {
   square(i, j) {
     const piece = this.pieceAt(i, j);
     const { selectedSquare } = this.state;
+    const [selectedSquareRow, selectedSquareCol] = selectedSquare;
     return (
       <Square
         key={j}
         team={piece ? piece.team : null}
         pieces={piece ? piece.choices : []}
         background={(i + j) % 2 ? 'd' : 'l'}
-        selected={selectedSquare === [i, j]}
+        isSelected={selectedSquareRow === i && selectedSquareCol === j}
+        selectSquareFunc={() => this.selectSquare(i, j)}
       />
     );
   }
