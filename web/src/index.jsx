@@ -1,7 +1,7 @@
 /* eslint-disable max-classes-per-file */
 /* eslint-disable react/prefer-stateless-function */
-/* eslint-disable react/prop-types */
 /* eslint-disable no-plusplus */
+import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Bishop } from './ImageMixer';
@@ -20,6 +20,12 @@ class Square extends React.Component {
     );
   }
 }
+
+Square.propTypes = {
+  team: PropTypes.string.isRequired,
+  pieces: PropTypes.arrayOf(PropTypes.string).isRequired,
+  background: PropTypes.string.isRequired,
+};
 
 function makeArray(start, lessThan) {
   const a = [];
@@ -97,6 +103,9 @@ class Board extends React.Component {
     );
   }
 }
+
+Board.propTypes = {
+};
 
 ReactDOM.render(
   <Board />,

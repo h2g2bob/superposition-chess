@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/prefer-stateless-function */
-/* eslint-disable react/prop-types */
 /* eslint-disable import/prefer-default-export */
 
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import img_bd from './images/Chess_bdt45.svg';
@@ -57,6 +57,11 @@ class Bishop extends React.Component {
     );
   }
 }
+
+Bishop.propTypes = {
+  team: PropTypes.string.isRequired,
+  pieces: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 export {
   Bishop,
