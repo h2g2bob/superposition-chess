@@ -45,6 +45,7 @@ class ImageMixer extends React.Component {
         {
           pieces.map((piece, index) => (
             <img
+              key={piece}
               style={{ opacity: 1.0 / (index + 1) }}
               src={IMAGES[team][piece]}
               alt=""
