@@ -2,7 +2,6 @@
 /* eslint-disable react/prefer-stateless-function */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-plusplus */
-/* eslint-disable no-nested-ternary */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Bishop } from './ImageMixer';
@@ -35,19 +34,42 @@ class Board extends React.Component {
     super(props);
 
     const size = 4;
+    const pieces = [];
+
+    makeArray(0, size).forEach((idx) => {
+      pieces.push({
+        row: 0,
+        col: idx,
+        choices: ['r', 'k', 'p'],
+        team: 'd',
+      });
+      pieces.push({
+        row: size - 1,
+        col: idx,
+        choices: ['r', 'k', 'p'],
+        team: 'l',
+      });
+    });
 
     this.state = {
+      pieces,
       size,
     };
   }
 
+  pieceAt(i, j) {
+    const { pieces } = this.state;
+    const [maybePiece] = pieces.filter((piece) => piece.row === i && piece.col === j);
+    return maybePiece;
+  }
+
   square(i, j) {
-    const { size } = this.state;
+    const piece = this.pieceAt(i, j);
     return (
       <Square
         key={j}
-        team={i === 0 ? 'd' : i === size - 1 ? 'l' : null}
-        pieces={(i === 0 || i === size - 1) ? ['b', 'k'] : []}
+        team={piece ? piece.team : null}
+        pieces={piece ? piece.choices : []}
         background={(i + j) % 2 ? 'd' : 'l'}
       />
     );
