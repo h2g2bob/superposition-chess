@@ -1,41 +1,40 @@
-/* eslint-disable camelcase */
 /* eslint-disable react/prefer-stateless-function */
 /* eslint-disable import/prefer-default-export */
 
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import img_bd from './images/Chess_bdt45.svg';
-import img_bl from './images/Chess_blt45.svg';
-import img_kd from './images/Chess_kdt45.svg';
-import img_kl from './images/Chess_klt45.svg';
-import img_nd from './images/Chess_ndt45.svg';
-import img_nl from './images/Chess_nlt45.svg';
-import img_pd from './images/Chess_pdt45.svg';
-import img_pl from './images/Chess_plt45.svg';
-import img_qd from './images/Chess_qdt45.svg';
-import img_ql from './images/Chess_qlt45.svg';
-import img_rd from './images/Chess_rdt45.svg';
-import img_rl from './images/Chess_rlt45.svg';
+import imgbd from './images/Chess_bdt45.svg';
+import imgbl from './images/Chess_blt45.svg';
+import imgkd from './images/Chess_kdt45.svg';
+import imgkl from './images/Chess_klt45.svg';
+import imgnd from './images/Chess_ndt45.svg';
+import imgnl from './images/Chess_nlt45.svg';
+import imgpd from './images/Chess_pdt45.svg';
+import imgpl from './images/Chess_plt45.svg';
+import imgqd from './images/Chess_qdt45.svg';
+import imgql from './images/Chess_qlt45.svg';
+import imgrd from './images/Chess_rdt45.svg';
+import imgrl from './images/Chess_rlt45.svg';
 
 import './ImageMixer.css';
 
 const IMAGES = {
   d: {
-    b: img_bd,
-    k: img_kd,
-    n: img_nd,
-    p: img_pd,
-    q: img_qd,
-    r: img_rd,
+    b: imgbd,
+    k: imgkd,
+    n: imgnd,
+    p: imgpd,
+    q: imgqd,
+    r: imgrd,
   },
   l: {
-    b: img_bl,
-    k: img_kl,
-    n: img_nl,
-    p: img_pl,
-    q: img_ql,
-    r: img_rl,
+    b: imgbl,
+    k: imgkl,
+    n: imgnl,
+    p: imgpl,
+    q: imgql,
+    r: imgrl,
   },
 };
 
