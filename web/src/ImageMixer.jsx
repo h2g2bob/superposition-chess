@@ -1,5 +1,4 @@
 /* eslint-disable react/prefer-stateless-function */
-/* eslint-disable import/prefer-default-export */
 
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -38,7 +37,7 @@ const IMAGES = {
   },
 };
 
-class Bishop extends React.Component {
+class ImageMixer extends React.Component {
   render() {
     const { pieces, team } = this.props;
     return (
@@ -57,11 +56,9 @@ class Bishop extends React.Component {
   }
 }
 
-Bishop.propTypes = {
+ImageMixer.propTypes = {
   team: PropTypes.string.isRequired,
   pieces: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-export {
-  Bishop,
-};
+export default ImageMixer;

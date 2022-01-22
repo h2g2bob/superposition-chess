@@ -4,7 +4,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Bishop } from './ImageMixer';
+import ImageMixer from './ImageMixer';
 import './index.css';
 
 class Square extends React.Component {
@@ -12,7 +12,7 @@ class Square extends React.Component {
     const { team, pieces, background } = this.props;
     return (
       <span className={`square square-${background}`}>
-        <Bishop
+        <ImageMixer
           team={team}
           pieces={pieces}
         />
