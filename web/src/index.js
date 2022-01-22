@@ -1,3 +1,9 @@
+/* eslint-disable max-classes-per-file */
+/* eslint-disable react/prefer-stateless-function */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/prop-types */
+/* eslint-disable no-plusplus */
+/* eslint-disable no-nested-ternary */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Bishop } from './ImageMixer';
@@ -5,11 +11,12 @@ import './index.css';
 
 class Square extends React.Component {
   render() {
+    const { team, pieces, background } = this.props;
     return (
-      <span className={`square square-${this.props.background}`}>
+      <span className={`square square-${background}`}>
         <Bishop
-          team={this.props.team}
-          pieces={this.props.pieces}
+          team={team}
+          pieces={pieces}
         />
       </span>
     );
@@ -26,8 +33,8 @@ class Board extends React.Component {
       grid[i] = [];
       for (let j = 0; j < size; j++) {
         grid[i][j] = {
-          team: i == 0 ? 'd' : i == size - 1 ? 'l' : null,
-          pieces: (i == 0 || i == size - 1) ? ['b', 'k'] : [],
+          team: i === 0 ? 'd' : i === size - 1 ? 'l' : null,
+          pieces: (i === 0 || i === size - 1) ? ['b', 'k'] : [],
           background: (i + j) % 2 ? 'd' : 'l',
         };
       }
@@ -39,11 +46,12 @@ class Board extends React.Component {
   }
 
   render() {
+    const { grid } = this.state;
     return (
       <div>
         hello world
         {
-          this.state.grid.map((row) => (
+          grid.map((row) => (
             <div className="row">
               {
                 row.map((square) => (

@@ -1,3 +1,9 @@
+/* eslint-disable camelcase */
+/* eslint-disable react/prefer-stateless-function */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/prop-types */
+/* eslint-disable import/prefer-default-export */
+
 import React from 'react';
 
 import img_bd from './images/Chess_bdt45.svg';
@@ -14,10 +20,6 @@ import img_rd from './images/Chess_rdt45.svg';
 import img_rl from './images/Chess_rlt45.svg';
 
 import './ImageMixer.css';
-
-export {
-  Bishop,
-};
 
 const IMAGES = {
   d: {
@@ -39,18 +41,16 @@ const IMAGES = {
 };
 
 class Bishop extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
+    const { pieces, team } = this.props;
     return (
       <div className="stack">
         {
-          this.props.pieces.map((piece, index) => (
+          pieces.map((piece, index) => (
             <img
               style={{ opacity: 1.0 / (index + 1) }}
-              src={IMAGES[this.props.team][piece]}
+              src={IMAGES[team][piece]}
+              alt=""
             />
           ))
         }
@@ -58,3 +58,7 @@ class Bishop extends React.Component {
     );
   }
 }
+
+export {
+  Bishop,
+};
