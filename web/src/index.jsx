@@ -50,8 +50,17 @@ function makeArray(start, lessThan) {
 }
 
 function pieceAt(pieces, i, j) {
-  const [maybePiece] = pieces.filter((piece) => piece.row === i && piece.col === j);
-  return maybePiece;
+  const maybePieceList = pieces.filter((piece) => piece.row === i && piece.col === j);
+  if (i === null) {
+    return null;
+  }
+  if (maybePieceList.length === 1) {
+    return maybePieceList[0];
+  }
+  if (maybePieceList.length === 0) {
+    return null;
+  }
+  throw new Error('multiple pieces at the same place');
 }
 
 class Board extends React.Component {
