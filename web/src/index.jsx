@@ -98,19 +98,19 @@ class Board extends React.Component {
 
   selectSquare(i, j) {
     this.setState((state) => {
-      const [selectedSquareRow, selectedSquareCol] = state.selectedSquare;
-      const selectedSameSquare = selectedSquareRow === i && selectedSquareCol === j;
-      const currentlySelectedPiece = pieceAt(state.pieces, selectedSquareRow, selectedSquareCol);
-      const newlySelectedPiece = pieceAt(state.pieces, i, j);
-      if (selectedSameSquare) {
+      const oldSelectedPiece = pieceAt(state.pieces, ...state.selectedSquare);
+      const newSelectedPiece = pieceAt(state.pieces, i, j);
+      if (oldSelectedPiece === newSelectedPiece) {
+        /* unselect */
         return { selectedSquare: [null, null] };
       }
-      if (currentlySelectedPiece) {
-        /* suggest move */
+      if (oldSelectedPiece) {
+        /* move */
         return {};
       }
-      if (newlySelectedPiece && newlySelectedPiece.team === state.playerTeam) {
-        return { selectedSquare: [i, j] };
+      if (newSelectedPiece && newSelectedPiece.team === state.playerTeam) {
+        /* select */
+        return { selectedSquare: [newSelectedPiece.row, newSelectedPiece.col] };
       }
       return {};
     });
