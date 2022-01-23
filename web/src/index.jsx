@@ -63,6 +63,16 @@ function pieceAt(pieces, i, j) {
   throw new Error('multiple pieces at the same place');
 }
 
+function updatePiece(pieces, key, update) {
+  return pieces.map((oldPiece) => {
+    if (oldPiece.key === key) {
+      const newPiece = { ...oldPiece, ...update };
+      return newPiece;
+    }
+    return oldPiece;
+  });
+}
+
 class Board extends React.Component {
   constructor(props) {
     super(props);
@@ -76,43 +86,57 @@ class Board extends React.Component {
         col: idx,
         choices: ['r', 'k', 'p'],
         team: 'd',
+        key: `d${idx}`,
       });
       pieces.push({
         row: size - 1,
         col: idx,
         choices: ['r', 'k', 'p'],
         team: 'l',
+        key: `l${idx}`,
       });
     });
 
-    const selectedSquare = [null, null];
+    const selectedPiece = null;
     const playerTeam = 'l';
 
     this.state = {
       pieces,
       size,
-      selectedSquare,
+      selectedPiece,
       playerTeam,
     };
   }
 
   selectSquare(i, j) {
     this.setState((state) => {
-      const oldSelectedPiece = pieceAt(state.pieces, ...state.selectedSquare);
-      const newSelectedPiece = pieceAt(state.pieces, i, j);
-      if (oldSelectedPiece === newSelectedPiece) {
-        /* unselect */
-        return { selectedSquare: [null, null] };
-      }
-      if (oldSelectedPiece) {
-        /* move */
+      const { selectedPiece, pieces } = state;
+
+      if (!selectedPiece) {
+        const newSelectedPiece = pieceAt(pieces, i, j);
+        if (newSelectedPiece && newSelectedPiece.team === state.playerTeam) {
+          /* select */
+          return { selectedPiece: newSelectedPiece };
+        }
         return {};
       }
-      if (newSelectedPiece && newSelectedPiece.team === state.playerTeam) {
-        /* select */
-        return { selectedSquare: [newSelectedPiece.row, newSelectedPiece.col] };
+
+      if (selectedPiece.row === i && selectedPiece.col === j) {
+        /* unselect */
+        return { selectedPiece: null };
       }
-      return {};
+
+      const willTakePiece = pieceAt(pieces, i, j);
+      if (willTakePiece) {
+        /* take */
+        return {};
+      }
+
+      /* move */
+      return {
+        selectedPiece: null,
+        pieces: updatePiece(pieces, selectedPiece.key, { row: i, col: j }),
+      };
     });
   }
 
@@ -123,15 +147,14 @@ class Board extends React.Component {
 
   square(i, j) {
     const piece = this.pieceAt(i, j);
-    const { selectedSquare } = this.state;
-    const [selectedSquareRow, selectedSquareCol] = selectedSquare;
+    const { selectedPiece } = this.state;
     return (
       <Square
         key={j}
         team={piece ? piece.team : null}
         pieces={piece ? piece.choices : []}
         background={(i + j) % 2 ? 'd' : 'l'}
-        isSelected={selectedSquareRow === i && selectedSquareCol === j}
+        isSelected={selectedPiece !== null && selectedPiece.row === i && selectedPiece.col === j}
         onClick={() => this.selectSquare(i, j)}
       />
     );
