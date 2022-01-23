@@ -2,6 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Square from './Square';
+import { pieceAt, possibleMoves } from './moves';
 import './index.css';
 
 function makeArray(start, lessThan) {
@@ -12,20 +13,6 @@ function makeArray(start, lessThan) {
   return a;
 }
 
-function pieceAt(pieces, i, j) {
-  const maybePieceList = pieces.filter((piece) => piece.row === i && piece.col === j);
-  if (i === null) {
-    return null;
-  }
-  if (maybePieceList.length === 1) {
-    return maybePieceList[0];
-  }
-  if (maybePieceList.length === 0) {
-    return null;
-  }
-  throw new Error('multiple pieces at the same place');
-}
-
 function updatePiece(pieces, key, update) {
   return pieces.map((oldPiece) => {
     if (oldPiece.key === key) {
@@ -34,6 +21,10 @@ function updatePiece(pieces, key, update) {
     }
     return oldPiece;
   });
+}
+
+function otherTeam(team) {
+  return team === 'l' ? 'd' : 'l';
 }
 
 class Board extends React.Component {
@@ -73,7 +64,9 @@ class Board extends React.Component {
 
   selectSquare(i, j) {
     this.setState((state) => {
-      const { selectedPiece, pieces } = state;
+      const {
+        selectedPiece, pieces, size, playerTeam,
+      } = state;
 
       if (!selectedPiece) {
         const newSelectedPiece = pieceAt(pieces, i, j);
@@ -89,6 +82,12 @@ class Board extends React.Component {
         return { selectedPiece: null };
       }
 
+      /* move/take allowed */
+      const possMoves = possibleMoves(selectedPiece, pieces, size);
+      if (!possMoves.some(([x, y]) => x === i && y === j)) {
+        return {};
+      }
+
       const willTakePiece = pieceAt(pieces, i, j);
       if (willTakePiece) {
         /* take */
@@ -99,6 +98,7 @@ class Board extends React.Component {
       return {
         selectedPiece: null,
         pieces: updatePiece(pieces, selectedPiece.key, { row: i, col: j }),
+        playerTeam: otherTeam(playerTeam),
       };
     });
   }
