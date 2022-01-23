@@ -1,8 +1,8 @@
 div.stack {
   display: inline-block;
   position: relative;
-  width: 3em;
-  height: 3em;
+  width: 15vmin;
+  height: 15vmin;
   background: inherit;
 }
 
