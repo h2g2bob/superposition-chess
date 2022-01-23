@@ -12,12 +12,12 @@ import './index.css';
 class Square extends React.Component {
   render() {
     const {
-      team, pieces, background, isSelected, selectSquareFunc,
+      team, pieces, background, isSelected, onClick,
     } = this.props;
     return (
       <span
         className={`square square-${background} square-selected-${isSelected}`}
-        onClick={selectSquareFunc}
+        onClick={onClick}
         role="button"
       >
         <ImageMixer
@@ -34,7 +34,7 @@ Square.propTypes = {
   pieces: PropTypes.arrayOf(PropTypes.string).isRequired,
   background: PropTypes.string.isRequired,
   isSelected: PropTypes.bool.isRequired,
-  selectSquareFunc: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 Square.defaultProps = {
@@ -47,6 +47,11 @@ function makeArray(start, lessThan) {
     a.push(i);
   }
   return a;
+}
+
+function pieceAt(pieces, i, j) {
+  const [maybePiece] = pieces.filter((piece) => piece.row === i && piece.col === j);
+  return maybePiece;
 }
 
 class Board extends React.Component {
@@ -72,28 +77,39 @@ class Board extends React.Component {
     });
 
     const selectedSquare = [null, null];
+    const playerTeam = 'l';
 
     this.state = {
       pieces,
       size,
       selectedSquare,
+      playerTeam,
     };
   }
 
   selectSquare(i, j) {
-    this.setState(() => ({ selectedSquare: [i, j] }));
+    this.setState((state) => {
+      const [selectedSquareRow, selectedSquareCol] = state.selectedSquare;
+      const selectedSameSquare = selectedSquareRow === i && selectedSquareCol === j;
+      const currentlySelectedPiece = pieceAt(state.pieces, selectedSquareRow, selectedSquareCol);
+      const newlySelectedPiece = pieceAt(state.pieces, i, j);
+      if (selectedSameSquare) {
+        return { selectedSquare: [null, null] };
+      }
+      if (currentlySelectedPiece) {
+        /* suggest move */
+        return {};
+      }
+      if (newlySelectedPiece && newlySelectedPiece.team === state.playerTeam) {
+        return { selectedSquare: [i, j] };
+      }
+      return {};
+    });
   }
-
-  /*
-  unSelectSquare () {
-    this.setState(() => {selectedSquare: [null, null]});
-  }
-  */
 
   pieceAt(i, j) {
     const { pieces } = this.state;
-    const [maybePiece] = pieces.filter((piece) => piece.row === i && piece.col === j);
-    return maybePiece;
+    return pieceAt(pieces, i, j);
   }
 
   square(i, j) {
@@ -107,7 +123,7 @@ class Board extends React.Component {
         pieces={piece ? piece.choices : []}
         background={(i + j) % 2 ? 'd' : 'l'}
         isSelected={selectedSquareRow === i && selectedSquareCol === j}
-        selectSquareFunc={() => this.selectSquare(i, j)}
+        onClick={() => this.selectSquare(i, j)}
       />
     );
   }
