@@ -1,0 +1,14 @@
+.square {
+
+}
+
+.square.square-l {
+  background: #eeeeee;
+}
+.square.square-d {
+  background: #cccccc;
+}
+
+.square.square-selected-true {
+  background: #cc6666;
+}
