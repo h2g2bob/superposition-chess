@@ -14,38 +14,78 @@ export function pieceAt(pieces, i, j) {
   throw new Error('multiple pieces at the same place');
 }
 
-function possibleMovesPawn(piece, pieces, size) {
-  const moves = [];
-  const oneRowForward = piece.row + ((piece.team === C.LIGHT) ? -1 : +1);
-  if (pieceAt(pieces, oneRowForward, piece.col) === null) {
-    moves.push([oneRowForward, piece.col]);
+const CAN_MOVE = {};
 
-    if (piece.row === 0 || piece.row === (size - 1)) {
-      const twoRowsForward = piece.row + ((piece.team === C.LIGHT) ? -2 : +2);
-      if (pieceAt(pieces, twoRowsForward, piece.col) === null) {
-        moves.push([twoRowsForward, piece.col]);
+export function canMove(piece, pieces, row, col, boardSize) {
+  if (piece.row === row && piece.col === col) {
+    /* stay where you are - not a move */
+    return [];
+  }
+  if (piece.row < 0 || piece.row >= boardSize
+   || piece.col < 0 || piece.col >= boardSize) {
+    /* can't go off-board */
+    return [];
+  }
+  const willTake = pieceAt(pieces, row, col);
+  if (willTake && willTake.team === piece.team) {
+    /* can't take your own piece */
+    return [];
+  }
+  /* for which pieces is this move valid? */
+  return piece.choices.filter(
+    (choice) => {
+      const moveFunc = CAN_MOVE[choice];
+      return moveFunc({
+        piece, pieces, row, col, boardSize,
+      });
+    },
+  );
+}
+
+CAN_MOVE[C.PAWN] = ({
+  piece, pieces, row, col, boardSize,
+}) => {
+  const forward = piece.team === C.LIGHT ? -1 : +1;
+  const startingRow = piece.team === C.LIGHT ? (boardSize - 1) : 0;
+  if (piece.col === col) {
+    if (pieceAt(pieces, piece.row + forward, piece.col)) {
+      return false;
+    }
+    if (piece.row + forward === row) {
+      return true;
+    }
+    if (piece.row === startingRow) {
+      if (pieceAt(pieces, piece.row + (2 * forward), piece.col)) {
+        return false;
+      }
+      if (piece.row + (2 * forward) === row) {
+        return true;
       }
     }
   }
-  return moves;
-}
+  return false;
+};
 
-function possibleMovesKing(piece) {
-  const moves = [];
-  moves.push([piece.row - 1, piece.col - 1]);
-  moves.push([piece.row - 1, piece.col]);
-  moves.push([piece.row - 1, piece.col + 1]);
-  moves.push([piece.row, piece.col - 1]);
-  moves.push([piece.row, piece.col + 1]);
-  moves.push([piece.row + 1, piece.col - 1]);
-  moves.push([piece.row + 1, piece.col]);
-  moves.push([piece.row + 1, piece.col + 1]);
-  return moves;
-}
+CAN_MOVE[C.KING] = ({ piece, row, col }) => (
+  Math.abs(piece.row - row) <= 1 && Math.abs(piece.col - col) <= 1
+);
 
-export function possibleMoves(piece, pieces, size) {
-  return [
-    ...possibleMovesPawn(piece, pieces, size),
-    ...possibleMovesKing(piece),
-  ];
-}
+CAN_MOVE[C.ROOK] = ({
+  piece, pieces, row, col,
+}) => {
+  const moveCol = Math.sign(col - piece.col);
+  const moveRow = Math.sign(row - piece.row);
+  if (moveCol !== 0 && moveRow !== 0) {
+    return false;
+  }
+  let checkRow = piece.row + moveRow;
+  let checkCol = piece.col + moveCol;
+  while (checkRow !== piece.row && checkCol !== piece.col) {
+    if (pieceAt(pieces, checkRow, checkCol)) {
+      return false;
+    }
+    checkRow += moveRow;
+    checkCol += moveCol;
+  }
+  return true;
+};

@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Square from './Square';
-import { pieceAt, possibleMoves } from './moves';
+import { pieceAt, canMove } from './moves';
 import C from './constants';
 import './index.css';
 
@@ -84,8 +84,8 @@ class Board extends React.Component {
       }
 
       /* move/take allowed */
-      const possMoves = possibleMoves(selectedPiece, pieces, size);
-      if (!possMoves.some(([x, y]) => x === i && y === j)) {
+      const remainingPieceChoices = canMove(selectedPiece, pieces, i, j, size);
+      if (!remainingPieceChoices.length) {
         return {};
       }
 
@@ -98,7 +98,11 @@ class Board extends React.Component {
       /* move */
       return {
         selectedPiece: null,
-        pieces: updatePiece(pieces, selectedPiece.key, { row: i, col: j }),
+        pieces: updatePiece(pieces, selectedPiece.key, {
+          row: i,
+          col: j,
+          choices: remainingPieceChoices,
+        }),
         playerTeam: otherTeam(playerTeam),
       };
     });
