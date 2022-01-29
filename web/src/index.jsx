@@ -43,13 +43,13 @@ class App extends React.Component {
       });
     }
 
-    const selectedPiece = null;
+    const selectedPieceKey = null;
     const playerTeam = C.LIGHT;
 
     this.state = {
       pieces,
       size,
-      selectedPiece,
+      selectedPieceKey,
       playerTeam,
     };
   }
@@ -57,21 +57,22 @@ class App extends React.Component {
   selectSquare(i, j) {
     this.setState((state) => {
       const {
-        selectedPiece, pieces, size, playerTeam,
+        selectedPieceKey, pieces, size, playerTeam,
       } = state;
 
+      const [selectedPiece] = pieces.filter((piece) => piece.key === selectedPieceKey);
       if (!selectedPiece) {
         const newSelectedPiece = pieceAt(pieces, i, j);
         if (newSelectedPiece && newSelectedPiece.team === state.playerTeam) {
           /* select */
-          return { selectedPiece: newSelectedPiece };
+          return { selectedPieceKey: newSelectedPiece.key };
         }
         return {};
       }
 
       if (selectedPiece.row === i && selectedPiece.col === j) {
         /* unselect */
-        return { selectedPiece: null };
+        return { selectedPieceKey: null };
       }
 
       /* move/take allowed */
@@ -88,8 +89,8 @@ class App extends React.Component {
 
       /* move */
       return {
-        selectedPiece: null,
-        pieces: updatePiece(pieces, selectedPiece.key, {
+        selectedPieceKey: null,
+        pieces: updatePiece(pieces, selectedPieceKey, {
           row: i,
           col: j,
           choices: remainingPieceChoices,
@@ -101,8 +102,10 @@ class App extends React.Component {
 
   render() {
     const {
-      size, pieces, selectedPiece, playerTeam,
+      size, pieces, selectedPieceKey, playerTeam,
     } = this.state;
+
+    const [selectedPiece] = pieces.filter((piece) => piece.key === selectedPieceKey);
 
     return (
       <div>
