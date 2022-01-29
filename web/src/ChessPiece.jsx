@@ -1,5 +1,3 @@
-/* eslint-disable react/prefer-stateless-function */
-
 import PropTypes from 'prop-types';
 import React from 'react';
 import ImageMixer from './ImageMixer';
@@ -36,16 +34,13 @@ const IMAGES = {
   },
 };
 
-class ChessPiece extends React.Component {
-  render() {
-    const { pieces, team } = this.props;
-    return (
-      <ImageMixer images={
-        pieces.map((piece) => IMAGES[team][piece])
-      }
-      />
-    );
-  }
+function ChessPiece({ pieces, team }) {
+  return (
+    <ImageMixer images={
+      pieces.map((piece) => IMAGES[team][piece])
+    }
+    />
+  );
 }
 
 ChessPiece.propTypes = {
