@@ -48,12 +48,14 @@ CAN_MOVE[C.PAWN] = ({
   const forward = piece.team === C.LIGHT ? -1 : +1;
   const startingRow = piece.team === C.LIGHT ? (boardSize - 1) : 0;
   if (piece.col === col) {
+    /* move forward one square if it's unoccupied */
     if (pieceAt(pieces, piece.row + forward, piece.col)) {
       return false;
     }
     if (piece.row + forward === row) {
       return true;
     }
+    /* move forward two squares if both are unoccupied */
     if (piece.row === startingRow) {
       if (pieceAt(pieces, piece.row + (2 * forward), piece.col)) {
         return false;
@@ -61,6 +63,12 @@ CAN_MOVE[C.PAWN] = ({
       if (piece.row + (2 * forward) === row) {
         return true;
       }
+    }
+  }
+  if (Math.abs(piece.col - col) === 1 && piece.row + forward === row) {
+    /* can take a piece diagonally */
+    if (pieceAt(pieces, row, col)) {
+      return true;
     }
   }
   return false;
