@@ -1,18 +1,9 @@
-/* eslint-disable no-plusplus */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Square from './Square';
+import Board from './Board';
 import { pieceAt, canMove } from './moves';
 import C from './constants';
 import './index.css';
-
-function makeArray(start, lessThan) {
-  const a = [];
-  for (let i = start; i < lessThan; ++i) {
-    a.push(i);
-  }
-  return a;
-}
 
 function updatePiece(pieces, key, update) {
   return pieces.map((oldPiece) => {
@@ -28,14 +19,14 @@ function otherTeam(team) {
   return team === C.LIGHT ? C.DARK : C.LIGHT;
 }
 
-class Board extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
 
     const size = 4;
     const pieces = [];
 
-    makeArray(0, size).forEach((idx) => {
+    for (let idx = 0; idx < size; idx += 1) {
       pieces.push({
         row: 0,
         col: idx,
@@ -50,7 +41,7 @@ class Board extends React.Component {
         team: C.LIGHT,
         key: `l${idx}`,
       });
-    });
+    }
 
     const selectedPiece = null;
     const playerTeam = C.LIGHT;
@@ -108,53 +99,34 @@ class Board extends React.Component {
     });
   }
 
-  pieceAt(i, j) {
-    const { pieces } = this.state;
-    return pieceAt(pieces, i, j);
-  }
-
-  square(i, j) {
-    const piece = this.pieceAt(i, j);
-    const { selectedPiece } = this.state;
-    return (
-      <Square
-        key={j}
-        team={piece ? piece.team : null}
-        pieces={piece ? piece.choices : []}
-        background={(i + j) % 2 ? 'd' : 'l'}
-        isSelected={selectedPiece !== null && selectedPiece.row === i && selectedPiece.col === j}
-        onClick={() => this.selectSquare(i, j)}
-      />
-    );
-  }
-
   render() {
-    const { size } = this.state;
-
-    const rowHeaders = makeArray(0, size);
-    const colHeaders = makeArray(0, size);
+    const {
+      size, pieces, selectedPiece, playerTeam,
+    } = this.state;
 
     return (
       <div>
         hello world
-        {
-          rowHeaders.map((i) => (
-            <div className="row" key={i}>
-              {
-                colHeaders.map((j) => this.square(i, j))
-              }
-            </div>
-          ))
-        }
+        <Board
+          pieces={pieces}
+          selectedPiece={selectedPiece}
+          selectSquare={(i, j) => this.selectSquare(i, j)}
+          size={size}
+        />
+        <div>
+          {
+            playerTeam === C.LIGHT ? 'WHITE to play' : 'BLACK to play'
+          }
+        </div>
       </div>
     );
   }
 }
 
-Board.propTypes = {
+App.propTypes = {
 };
 
 ReactDOM.render(
-  <Board />,
+  <App />,
   document.getElementById('root'),
 );
