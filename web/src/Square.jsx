@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import PropTypes from 'prop-types';
 import React from 'react';
-import ImageMixer from './ImageMixer';
+import ChessPiece from './ChessPiece';
 import './Square.css';
 
 function Square({
@@ -14,7 +14,7 @@ function Square({
       onClick={onClick}
       role="button"
     >
-      <ImageMixer
+      <ChessPiece
         team={team}
         pieces={pieces}
       />
