@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import ImageMixer from './ImageMixer';
+import C from './constants';
 
 import imgbd from './images/Chess_bdt45.svg';
 import imgbl from './images/Chess_blt45.svg';
@@ -15,24 +16,21 @@ import imgql from './images/Chess_qlt45.svg';
 import imgrd from './images/Chess_rdt45.svg';
 import imgrl from './images/Chess_rlt45.svg';
 
-const IMAGES = {
-  d: {
-    b: imgbd,
-    k: imgkd,
-    n: imgnd,
-    p: imgpd,
-    q: imgqd,
-    r: imgrd,
-  },
-  l: {
-    b: imgbl,
-    k: imgkl,
-    n: imgnl,
-    p: imgpl,
-    q: imgql,
-    r: imgrl,
-  },
-};
+const IMAGES = {};
+IMAGES[C.DARK] = {};
+IMAGES[C.DARK][C.BISHOP] = imgbd;
+IMAGES[C.DARK][C.KING] = imgkd;
+IMAGES[C.DARK][C.KNIGHT] = imgnd;
+IMAGES[C.DARK][C.PAWN] = imgpd;
+IMAGES[C.DARK][C.QUEEN] = imgqd;
+IMAGES[C.DARK][C.ROOK] = imgrd;
+IMAGES[C.LIGHT] = {};
+IMAGES[C.LIGHT][C.BISHOP] = imgbl;
+IMAGES[C.LIGHT][C.KING] = imgkl;
+IMAGES[C.LIGHT][C.KNIGHT] = imgnl;
+IMAGES[C.LIGHT][C.PAWN] = imgpl;
+IMAGES[C.LIGHT][C.QUEEN] = imgql;
+IMAGES[C.LIGHT][C.ROOK] = imgrl;
 
 function ChessPiece({ pieces, team }) {
   return (

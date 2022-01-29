@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Square from './Square';
 import { pieceAt, possibleMoves } from './moves';
+import C from './constants';
 import './index.css';
 
 function makeArray(start, lessThan) {
@@ -24,7 +25,7 @@ function updatePiece(pieces, key, update) {
 }
 
 function otherTeam(team) {
-  return team === 'l' ? 'd' : 'l';
+  return team === C.LIGHT ? C.DARK : C.LIGHT;
 }
 
 class Board extends React.Component {
@@ -38,21 +39,21 @@ class Board extends React.Component {
       pieces.push({
         row: 0,
         col: idx,
-        choices: ['r', 'k', 'p'],
-        team: 'd',
+        choices: [C.ROOK, C.KING, C.PAWN],
+        team: C.DARK,
         key: `d${idx}`,
       });
       pieces.push({
         row: size - 1,
         col: idx,
-        choices: ['r', 'k', 'p'],
-        team: 'l',
+        choices: [C.ROOK, C.KING, C.PAWN],
+        team: C.LIGHT,
         key: `l${idx}`,
       });
     });
 
     const selectedPiece = null;
-    const playerTeam = 'l';
+    const playerTeam = C.LIGHT;
 
     this.state = {
       pieces,

@@ -1,3 +1,5 @@
+import C from './constants';
+
 export function pieceAt(pieces, i, j) {
   const maybePieceList = pieces.filter((piece) => piece.row === i && piece.col === j);
   if (i === null) {
@@ -14,12 +16,12 @@ export function pieceAt(pieces, i, j) {
 
 function possibleMovesPawn(piece, pieces, size) {
   const moves = [];
-  const oneRowForward = piece.row + ((piece.team === 'l') ? -1 : +1);
+  const oneRowForward = piece.row + ((piece.team === C.LIGHT) ? -1 : +1);
   if (pieceAt(pieces, oneRowForward, piece.col) === null) {
     moves.push([oneRowForward, piece.col]);
 
     if (piece.row === 0 || piece.row === (size - 1)) {
-      const twoRowsForward = piece.row + ((piece.team === 'l') ? -2 : +2);
+      const twoRowsForward = piece.row + ((piece.team === C.LIGHT) ? -2 : +2);
       if (pieceAt(pieces, twoRowsForward, piece.col) === null) {
         moves.push([twoRowsForward, piece.col]);
       }
