@@ -21,7 +21,10 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
-    const size = 4;
+    // size -- This should be fixed when we move pieces into the store, or
+    // make START_GAME into an action
+    const size = 4; // nasty shadow of a value in the store
+
     const pieces = [];
 
     for (let idx = 0; idx < size; idx += 1) {
@@ -46,7 +49,6 @@ class App extends React.Component {
 
     this.state = {
       pieces,
-      size,
       selectedPieceKey,
       playerTeam,
     };
@@ -100,7 +102,7 @@ class App extends React.Component {
 
   render() {
     const {
-      size, pieces, selectedPieceKey, playerTeam,
+      pieces, selectedPieceKey, playerTeam,
     } = this.state;
 
     const [selectedPiece] = pieces.filter((piece) => piece.key === selectedPieceKey);
@@ -112,7 +114,6 @@ class App extends React.Component {
           pieces={pieces}
           selectedPiece={selectedPiece}
           selectSquare={(i, j) => this.selectSquare(i, j)}
-          size={size}
         />
         <div>
           {
