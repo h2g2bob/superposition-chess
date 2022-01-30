@@ -12,11 +12,11 @@ function makeArray(start, lessThan) {
   return a;
 }
 
-class Board extends React.Component {
-  square(i, j) {
-    const { pieces } = this.props;
+function Board({
+  size, pieces, selectedPiece, selectSquare,
+}) {
+  function square(i, j) {
     const piece = pieceAt(pieces, i, j);
-    const { selectedPiece, selectSquare } = this.props;
     return (
       <Square
         key={j}
@@ -29,26 +29,22 @@ class Board extends React.Component {
     );
   }
 
-  render() {
-    const { size } = this.props;
+  const rowHeaders = makeArray(0, size);
+  const colHeaders = makeArray(0, size);
 
-    const rowHeaders = makeArray(0, size);
-    const colHeaders = makeArray(0, size);
-
-    return (
-      <div className="board">
-        {
-          rowHeaders.map((i) => (
-            <div className="row" key={i}>
-              {
-                colHeaders.map((j) => this.square(i, j))
-              }
-            </div>
-          ))
-        }
-      </div>
-    );
-  }
+  return (
+    <div className="board">
+      {
+        rowHeaders.map((i) => (
+          <div className="row" key={i}>
+            {
+              colHeaders.map((j) => square(i, j))
+            }
+          </div>
+        ))
+      }
+    </div>
+  );
 }
 
 Board.propTypes = {
