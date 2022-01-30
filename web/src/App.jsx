@@ -2,7 +2,6 @@ import React from 'react';
 import Board from './Board';
 import { pieceAt, canMove } from './moves';
 import C from './constants';
-import './index.css';
 
 function updatePiece(pieces, key, update) {
   return pieces.map((oldPiece) => {

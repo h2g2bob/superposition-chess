@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Square from './Square';
 import { pieceAt } from './moves';
-import './index.css';
 
 function makeArray(start, lessThan) {
   const a = [];
