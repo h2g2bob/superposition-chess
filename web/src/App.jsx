@@ -1,16 +1,20 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { ConnectedRouter } from 'connected-react-router';
+import history from './history';
 import Home from './Home';
 import Game from './Game';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/game/:id" element={<Game />} />
-      </Routes>
-    </BrowserRouter>
+    <ConnectedRouter history={history}>
+      <BrowserRouter history={history}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/game/:id" element={<Game />} />
+        </Routes>
+      </BrowserRouter>
+    </ConnectedRouter>
   );
 }
 
