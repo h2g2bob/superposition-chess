@@ -16,7 +16,7 @@ function makeArray(start, lessThan) {
 function Board({
   pieces, selectedPiece, selectSquare,
 }) {
-  const size = useSelector((state) => state.boardSize);
+  const size = useSelector((state) => state.game.boardSize);
 
   function square(i, j) {
     const piece = pieceAt(pieces, i, j);
