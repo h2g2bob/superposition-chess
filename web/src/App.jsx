@@ -1,24 +1,25 @@
 import React from 'react';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import { ConnectedRouter } from 'connected-react-router';
-import history from './history';
+import { connect } from 'react-redux';
+import { createRouteNodeSelector } from 'redux-router5';
+
 import Home from './Home';
 import Game from './Game';
 
-function App() {
-  return (
-    <ConnectedRouter history={history}>
-      <BrowserRouter history={history}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/game/:id" element={<Game />} />
-        </Routes>
-      </BrowserRouter>
-    </ConnectedRouter>
-  );
+/* eslint-disable react/prop-types */
+/* eslint-disable no-console */
+function App({ route }) {
+  const name = 'game';
+  console.log(route);
+
+  switch (name) {
+    case 'game':
+      return <Game />;
+    default:
+      return <Home />;
+  }
 }
 
 App.propTypes = {
 };
 
-export default App;
+export default connect(createRouteNodeSelector(''))(App);

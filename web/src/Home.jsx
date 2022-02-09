@@ -1,11 +1,11 @@
 import React from 'react';
 import uuid from 'react-uuid';
-import { push } from 'connected-react-router';
-import { connect, useDispatch } from 'react-redux';
+// import { push } from 'connected-react-router';
+import { useDispatch } from 'react-redux';
 import { newGameAction } from './actions';
 
 /* eslint-disable react/prop-types */
-function Home({ pushRoute }) {
+function Home() {
   const dispatch = useDispatch();
   return (
     <button
@@ -14,7 +14,7 @@ function Home({ pushRoute }) {
         const newGameId = uuid();
         /* this dispatch doesn't happen if we also pushRoute!? */
         dispatch(newGameAction(newGameId, 4));
-        pushRoute(`/game/${newGameId}`);
+        // pushRoute(`/game/${newGameId}`);
       }}
     >
       New game
@@ -25,4 +25,4 @@ function Home({ pushRoute }) {
 Home.propTypes = {
 };
 
-export default connect(null, { pushRoute: push })(Home);
+export default Home;

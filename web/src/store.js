@@ -1,10 +1,6 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { connectRouter, routerMiddleware } from 'connected-react-router';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { router5Middleware, router5Reducer } from 'redux-router5';
 import { actions } from './actions';
-import history from './history';
-
-const initialState = {
-};
 
 function newGame(action) {
   return {
@@ -13,20 +9,25 @@ function newGame(action) {
   };
 }
 
-const store = configureStore({
-  preloadedState: initialState,
-  middleware: [routerMiddleware(history)],
-  reducer: {
-    router: connectRouter(history),
-    game: (state = initialState, action = undefined) => {
-      switch (action.type) {
-        case actions.NEW_GAME:
-          return { ...state, game: newGame(action) };
-        default:
-          return state;
-      }
-    },
-  },
-});
+export default function configureStore(router, initialState = {}) {
+  const createStoreWithMiddleware = applyMiddleware(
+    router5Middleware(router),
+  )(createStore);
 
-export default store;
+  const store = createStoreWithMiddleware(
+    combineReducers({
+      router: router5Reducer,
+      game: (state = initialState, action = undefined) => {
+        switch (action.type) {
+          case actions.NEW_GAME:
+            return { ...state, game: newGame(action) };
+          default:
+            return state;
+        }
+      },
+    }),
+    initialState,
+  );
+
+  return store;
+}
