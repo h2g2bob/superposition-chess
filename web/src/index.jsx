@@ -9,13 +9,15 @@ import createRouter from './create-router';
 const router = createRouter();
 const store = configureStore(router);
 
-ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={router}>
-        <App router={router} />
-      </RouterProvider>
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById('root'),
-);
+router.start(() => {
+  ReactDOM.render(
+    <React.StrictMode>
+      <Provider store={store}>
+        <RouterProvider router={router}>
+          <App router={router} />
+        </RouterProvider>
+      </Provider>
+    </React.StrictMode>,
+    document.getElementById('root'),
+  );
+});
