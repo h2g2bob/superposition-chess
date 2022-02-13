@@ -1,4 +1,4 @@
 export default [
   { name: 'home', path: '/' },
-  { name: 'game', path: '/game' },
+  { name: 'game', path: '/game/:id' },
 ];
