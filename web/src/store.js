@@ -4,7 +4,7 @@ import { actions } from './actions';
 
 function newGame(action) {
   return {
-    id: action.id,
+    id: action.newGameId,
     boardSize: action.boardSize,
   };
 }
@@ -20,7 +20,7 @@ export default function configureStore(router, initialState = {}) {
       game: (state = initialState, action = undefined) => {
         switch (action.type) {
           case actions.NEW_GAME:
-            return { ...state, game: newGame(action) };
+            return { ...state, ...newGame(action) };
           default:
             return state;
         }
