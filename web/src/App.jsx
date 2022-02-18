@@ -9,6 +9,7 @@ import Game from './Game';
 /* eslint-disable no-console */
 function App() {
   const game = useSelector((state) => state.game);
+  useSelector((state) => console.log(state));
   if (game && game.id) {
     return <Game />;
   }
