@@ -15,6 +15,7 @@ function App() {
       <Game
         boardSize={game.boardSize}
         pieces={game.pieces}
+        playerTeam={game.playerTeam}
       />
     );
   }

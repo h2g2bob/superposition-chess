@@ -31,6 +31,7 @@ function newGame(action) {
     id: action.newGameId,
     boardSize: action.boardSize,
     pieces: makePieces(action.boardSize),
+    playerTeam: C.LIGHT,
   };
 }
 
@@ -46,6 +47,8 @@ export default function configureStore(router, initialState = {}) {
         switch (action.type) {
           case actions.NEW_GAME:
             return { ...state, ...newGame(action) };
+          case actions.SET_PLAYER_TEAM:
+            return { ...state, playerTeam: action.playerTeam };
           default:
             return state;
         }

@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+// import { useDispatch } from 'react-redux';
 import Board from './Board';
 import { pieceAt, canMove } from './moves';
+// import { setPlayerTeamAction } from './actions';
 import C from './constants';
 
 function updatePiece(pieces, key, update) {
@@ -21,30 +23,29 @@ function otherTeam(team) {
 class Game extends React.Component {
   constructor(props) {
     super(props);
-    const { pieces } = props; // hack
+    const { pieces, playerTeam } = props; // hack
 
     const selectedPieceKey = null;
-    const playerTeam = C.LIGHT;
 
     this.state = {
       pieces,
-      selectedPieceKey,
       playerTeam,
+      selectedPieceKey,
     };
   }
 
   selectSquare(i, j) {
-    const { boardSize } = this.props;
+    const { boardSize, playerTeam } = this.props;
 
     this.setState((state) => {
       const {
-        selectedPieceKey, pieces, playerTeam,
+        selectedPieceKey, pieces,
       } = state;
 
       const [selectedPiece] = pieces.filter((piece) => piece.key === selectedPieceKey);
       if (!selectedPiece) {
         const newSelectedPiece = pieceAt(pieces, i, j);
-        if (newSelectedPiece && newSelectedPiece.team === state.playerTeam) {
+        if (newSelectedPiece && newSelectedPiece.team === playerTeam) {
           /* select */
           return { selectedPieceKey: newSelectedPiece.key };
         }
@@ -69,6 +70,11 @@ class Game extends React.Component {
       }
 
       /* move */
+      /*
+        If we were a pure component, we could...
+          const dispatch = useDispatch();
+          dispatch(setPlayerTeamAction(otherTeam(playerTeam)));
+      */
       return {
         selectedPieceKey: null,
         pieces: updatePiece(pieces, selectedPieceKey, {
@@ -111,6 +117,7 @@ class Game extends React.Component {
 Game.propTypes = {
   boardSize: PropTypes.number.isRequired,
   pieces: PropTypes.arrayOf(PropTypes.object).isRequired,
+  playerTeam: PropTypes.string.isRequired,
 };
 
 export default Game;
