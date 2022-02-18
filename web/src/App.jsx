@@ -14,6 +14,7 @@ function App() {
     return (
       <Game
         boardSize={game.boardSize}
+        pieces={game.pieces}
       />
     );
   }

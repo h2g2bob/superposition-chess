@@ -21,26 +21,7 @@ function otherTeam(team) {
 class Game extends React.Component {
   constructor(props) {
     super(props);
-    const { boardSize } = props;
-
-    const pieces = [];
-
-    for (let idx = 0; idx < boardSize; idx += 1) {
-      pieces.push({
-        row: 0,
-        col: idx,
-        choices: [C.ROOK, C.KING, C.PAWN],
-        team: C.DARK,
-        key: `d${idx}`,
-      });
-      pieces.push({
-        row: boardSize - 1,
-        col: idx,
-        choices: [C.ROOK, C.KING, C.PAWN],
-        team: C.LIGHT,
-        key: `l${idx}`,
-      });
-    }
+    const { pieces } = props; // hack
 
     const selectedPieceKey = null;
     const playerTeam = C.LIGHT;
@@ -129,6 +110,7 @@ class Game extends React.Component {
 
 Game.propTypes = {
   boardSize: PropTypes.number.isRequired,
+  pieces: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default Game;
