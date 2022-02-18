@@ -11,7 +11,11 @@ function App() {
   const game = useSelector((state) => state.game);
   useSelector((state) => console.log(state));
   if (game && game.id) {
-    return <Game />;
+    return (
+      <Game
+        boardSize={game.boardSize}
+      />
+    );
   }
   return <Home />;
 }

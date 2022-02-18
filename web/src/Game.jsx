@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Board from './Board';
 import { pieceAt, canMove } from './moves';
 import C from './constants';
@@ -20,14 +21,11 @@ function otherTeam(team) {
 class Game extends React.Component {
   constructor(props) {
     super(props);
-
-    // size -- This should be fixed when we move pieces into the store, or
-    // make START_GAME into an action
-    const size = 4; // nasty shadow of a value in the store
+    const { boardSize } = props;
 
     const pieces = [];
 
-    for (let idx = 0; idx < size; idx += 1) {
+    for (let idx = 0; idx < boardSize; idx += 1) {
       pieces.push({
         row: 0,
         col: idx,
@@ -36,7 +34,7 @@ class Game extends React.Component {
         key: `d${idx}`,
       });
       pieces.push({
-        row: size - 1,
+        row: boardSize - 1,
         col: idx,
         choices: [C.ROOK, C.KING, C.PAWN],
         team: C.LIGHT,
@@ -55,9 +53,11 @@ class Game extends React.Component {
   }
 
   selectSquare(i, j) {
+    const { boardSize } = this.props;
+
     this.setState((state) => {
       const {
-        selectedPieceKey, pieces, size, playerTeam,
+        selectedPieceKey, pieces, playerTeam,
       } = state;
 
       const [selectedPiece] = pieces.filter((piece) => piece.key === selectedPieceKey);
@@ -76,7 +76,7 @@ class Game extends React.Component {
       }
 
       /* move/take allowed */
-      const remainingPieceChoices = canMove(selectedPiece, pieces, i, j, size);
+      const remainingPieceChoices = canMove(selectedPiece, pieces, i, j, boardSize);
       if (!remainingPieceChoices.length) {
         return {};
       }
@@ -101,6 +101,7 @@ class Game extends React.Component {
   }
 
   render() {
+    const { boardSize } = this.props;
     const {
       pieces, selectedPieceKey, playerTeam,
     } = this.state;
@@ -111,6 +112,7 @@ class Game extends React.Component {
       <div>
         hello world
         <Board
+          size={boardSize}
           pieces={pieces}
           selectedPiece={selectedPiece}
           selectSquare={(i, j) => this.selectSquare(i, j)}
@@ -126,6 +128,7 @@ class Game extends React.Component {
 }
 
 Game.propTypes = {
+  boardSize: PropTypes.number.isRequired,
 };
 
 export default Game;

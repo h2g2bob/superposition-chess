@@ -1,7 +1,6 @@
 /* eslint-disable react/forbid-prop-types */
 import PropTypes from 'prop-types';
 import React from 'react';
-import { useSelector } from 'react-redux';
 import Square from './Square';
 import { pieceAt } from './moves';
 
@@ -14,10 +13,8 @@ function makeArray(start, lessThan) {
 }
 
 function Board({
-  pieces, selectedPiece, selectSquare,
+  pieces, selectedPiece, selectSquare, size,
 }) {
-  const size = useSelector((state) => state.game.boardSize);
-
   function square(i, j) {
     const piece = pieceAt(pieces, i, j);
     let highlight = 'normal';
@@ -58,6 +55,7 @@ Board.propTypes = {
   pieces: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectedPiece: PropTypes.object,
   selectSquare: PropTypes.func.isRequired,
+  size: PropTypes.number.isRequired,
 };
 
 Board.defaultProps = {
