@@ -6,11 +6,11 @@ import ChessPiece from './ChessPiece';
 import './Square.css';
 
 function Square({
-  team, pieces, background, isSelected, onClick,
+  team, pieces, background, highlight, onClick,
 }) {
   return (
     <span
-      className={`square square-${background} square-selected-${isSelected}`}
+      className={`square square-${background} highlight-${highlight}`}
       onClick={onClick}
       role="button"
     >
@@ -26,7 +26,7 @@ Square.propTypes = {
   team: PropTypes.string,
   pieces: PropTypes.arrayOf(PropTypes.string).isRequired,
   background: PropTypes.string.isRequired,
-  isSelected: PropTypes.bool.isRequired,
+  highlight: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 

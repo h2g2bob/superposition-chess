@@ -20,13 +20,17 @@ function Board({
 
   function square(i, j) {
     const piece = pieceAt(pieces, i, j);
+    let highlight = 'normal';
+    if (selectedPiece !== null && selectedPiece.row === i && selectedPiece.col === j) {
+      highlight = 'selected';
+    }
     return (
       <Square
         key={j}
         team={piece ? piece.team : null}
         pieces={piece ? piece.choices : []}
         background={(i + j) % 2 ? 'd' : 'l'}
-        isSelected={selectedPiece !== null && selectedPiece.row === i && selectedPiece.col === j}
+        highlight={highlight}
         onClick={() => selectSquare(i, j)}
       />
     );

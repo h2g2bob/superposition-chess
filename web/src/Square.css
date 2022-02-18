@@ -9,6 +9,6 @@
   background: #cccccc;
 }
 
-.square.square-selected-true {
+.square.highlight-selected {
   background: #cc6666;
 }
