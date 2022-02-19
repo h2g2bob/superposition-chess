@@ -93,8 +93,6 @@ export default function configureStore(router, initialState = {}) {
         switch (action.type) {
           case actions.NEW_GAME:
             return { ...state, ...newGame(action) };
-          case actions.SET_PLAYER_TEAM:
-            return { ...state, playerTeam: action.playerTeam };
           case actions.SELECT_PIECE:
             return { ...state, selectedPieceKey: action.pieceKey };
           case actions.MOVE_PIECE:
