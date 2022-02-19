@@ -23,9 +23,7 @@ function otherTeam(team) {
 class Game extends React.Component {
   constructor(props) {
     super(props);
-    const { pieces, playerTeam } = props; // hack
-
-    const selectedPieceKey = null;
+    const { pieces, playerTeam, selectedPieceKey } = props; // hack
 
     this.state = {
       pieces,
@@ -90,7 +88,7 @@ class Game extends React.Component {
   render() {
     const { boardSize } = this.props;
     const {
-      pieces, selectedPieceKey, playerTeam,
+      pieces, playerTeam, selectedPieceKey,
     } = this.state;
 
     const [selectedPiece] = pieces.filter((piece) => piece.key === selectedPieceKey);
@@ -118,6 +116,11 @@ Game.propTypes = {
   boardSize: PropTypes.number.isRequired,
   pieces: PropTypes.arrayOf(PropTypes.object).isRequired,
   playerTeam: PropTypes.string.isRequired,
+  selectedPieceKey: PropTypes.string,
+};
+
+Game.defaultProps = {
+  selectedPieceKey: null,
 };
 
 export default Game;

@@ -32,6 +32,7 @@ function newGame(action) {
     boardSize: action.boardSize,
     pieces: makePieces(action.boardSize),
     playerTeam: C.LIGHT,
+    selectedPieceKey: null,
   };
 }
 

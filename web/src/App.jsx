@@ -16,6 +16,7 @@ function App() {
         boardSize={game.boardSize}
         pieces={game.pieces}
         playerTeam={game.playerTeam}
+        selectedPieceKey={game.selectedPieceKey}
       />
     );
   }
