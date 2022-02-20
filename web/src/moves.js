@@ -88,7 +88,7 @@ CAN_MOVE[C.ROOK] = ({
   }
   let checkRow = piece.row + unitRow;
   let checkCol = piece.col + unitCol;
-  while (checkRow !== piece.row && checkCol !== piece.col) {
+  while (checkRow !== row && checkCol !== col) {
     if (pieceAt(pieces, checkRow, checkCol)) {
       return false;
     }
