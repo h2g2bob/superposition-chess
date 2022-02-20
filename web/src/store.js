@@ -33,12 +33,13 @@ function makePieces(boardSize, availableChoices) {
 }
 
 function newGame(action) {
-  const availableChoices = [C.ROOK, C.KING, C.PAWN, C.PAWN];
+  const { availableChoices } = action;
+  const boardSize = availableChoices.length;
   return {
     id: action.newGameId,
-    boardSize: action.boardSize,
+    boardSize,
     availableChoices,
-    pieces: makePieces(action.boardSize, availableChoices),
+    pieces: makePieces(boardSize, availableChoices),
     proposedPieces: null,
     playerTeam: C.LIGHT,
     selectedPieceKey: null,

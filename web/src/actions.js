@@ -6,11 +6,11 @@ export const actions = {
   ROLLBACK_MOVE: 'ROLLBACK_MOVE',
 };
 
-export function newGameAction(newGameId, boardSize) {
+export function newGameAction(newGameId, availableChoices) {
   return {
     type: actions.NEW_GAME,
     newGameId,
-    boardSize,
+    availableChoices,
   };
 }
 
