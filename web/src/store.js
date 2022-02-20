@@ -61,7 +61,7 @@ function updatePiece(pieces, key, update) {
 
 function basicMovePiece(state, action) {
   const { pieceKey, row, col } = action;
-  const { pieces, boardSize } = state;
+  const { pieces, boardSize, team } = state;
   const [selectedPiece] = pieces.filter((piece) => piece.key === pieceKey);
 
   if (!selectedPiece) {
@@ -74,27 +74,29 @@ function basicMovePiece(state, action) {
     return null;
   }
 
-  const willTakePiece = pieceAt(pieces, row, col);
-  if (willTakePiece) {
-    /* take - not implemented yet */
-    return null;
-  }
-
   /* move */
-  return updatePiece(pieces, pieceKey, {
+  let newPieces = updatePiece(pieces, pieceKey, {
     row,
     col,
     choices: remainingPieceChoices,
   });
-}
 
-function movePiece(state, action) {
-  const { availableChoices } = state;
-  const pieces = basicMovePiece(state, action);
-  if (pieces === null) {
-    return null;
+  const willTakePiece = pieceAt(pieces, row, col);
+  if (willTakePiece) {
+    /* take */
+    if (willTakePiece.team === team) {
+      return null;
+    }
+    newPieces = updatePiece(newPieces, willTakePiece.key, {
+      row: -1,
+      col: -1,
+    });
   }
 
+  return newPieces;
+}
+
+function filterPiecesByValidCombinations(pieces, availableChoices) {
   // eg: if one piece moves like a queen, then no other piece can be the queen
   const piecesLimitedByValidCombinations = pieces.map(
     (piece) => limitPieceToRemainingPossibilities(
@@ -108,7 +110,37 @@ function movePiece(state, action) {
     console.log('No valid combination');
     return null;
   }
+
   return piecesLimitedByValidCombinations;
+}
+
+function filterPiecesByKingAlive(pieces, availableChoices) {
+  const piecesKingAlive = pieces.map((piece) => {
+    if (piece.row === -1) {
+      return {
+        ...piece,
+        choices: piece.choices.filter((choice) => choice !== C.KING),
+      };
+    }
+    return piece;
+  });
+  return filterPiecesByValidCombinations(piecesKingAlive, availableChoices);
+}
+
+function movePiece(state, action) {
+  const { availableChoices } = state;
+  const piecesMove = basicMovePiece(state, action);
+  if (piecesMove === null) {
+    return null;
+  }
+
+  const piecesCombo = filterPiecesByValidCombinations(piecesMove, availableChoices);
+  if (piecesCombo === null) {
+    return null;
+  }
+
+  const piecesKing = filterPiecesByKingAlive(piecesCombo, availableChoices);
+  return piecesKing === null ? piecesCombo : piecesKing;
 }
 
 function commitMove(state) {
