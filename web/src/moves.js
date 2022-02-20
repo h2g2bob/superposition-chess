@@ -97,3 +97,26 @@ CAN_MOVE[C.ROOK] = ({
   }
   return true;
 };
+
+CAN_MOVE[C.BISHOP] = ({
+  piece, pieces, row, col,
+}) => {
+  const moveCol = (col - piece.col);
+  const moveRow = (row - piece.row);
+  if (Math.abs(moveCol) !== Math.abs(moveRow)) {
+    return false;
+  }
+
+  const unitCol = Math.sign(moveCol);
+  const unitRow = Math.sign(moveRow);
+  let checkRow = piece.row + unitRow;
+  let checkCol = piece.col + unitCol;
+  while (checkRow !== row && checkCol !== col) {
+    if (pieceAt(pieces, checkRow, checkCol)) {
+      return false;
+    }
+    checkRow += unitRow;
+    checkCol += unitCol;
+  }
+  return true;
+};
