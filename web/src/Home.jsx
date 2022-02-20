@@ -1,27 +1,27 @@
 import React from 'react';
-import uuid from 'react-uuid';
-import { useDispatch } from 'react-redux';
-import { useRouter } from 'react-router5';
-import { newGameAction } from './actions';
+import NewGameButton from './NewGameButton';
 import C from './constants';
-import './Home.css';
 
 function Home() {
-  const dispatch = useDispatch();
-  const router = useRouter();
-  const availableChoices = [C.ROOK, C.KING, C.PAWN, C.PAWN];
   return (
-    <button
-      className="start_game"
-      type="button"
-      onClick={() => {
-        const newGameId = uuid();
-        router.navigate('game', { id: newGameId });
-        dispatch(newGameAction(newGameId, availableChoices));
-      }}
-    >
-      New game
-    </button>
+    <div>
+      <NewGameButton
+        label="New game"
+        availableChoices={[C.KING, C.ROOK, C.PAWN, C.PAWN]}
+      />
+      <NewGameButton
+        label="KRRP"
+        availableChoices={[C.KING, C.ROOK, C.ROOK, C.PAWN]}
+      />
+      <NewGameButton
+        label="KRBP"
+        availableChoices={[C.KING, C.ROOK, C.BISHOP, C.PAWN]}
+      />
+      <NewGameButton
+        label="KQRB"
+        availableChoices={[C.KING, C.QUEEN, C.ROOK, C.BISHOP]}
+      />
+    </div>
   );
 }
 
