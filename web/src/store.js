@@ -5,21 +5,25 @@ import { pieceAt, canMove } from './moves';
 import { limitPieceToRemainingPossibilities } from './moves_solve_remaining';
 import C from './constants';
 
-function makePieces(boardSize) {
+function unique(array) {
+  return array.filter((item, index) => array.slice(0, index).indexOf(item) === -1);
+}
+
+function makePieces(boardSize, availableChoices) {
   const pieces = [];
 
   for (let idx = 0; idx < boardSize; idx += 1) {
     pieces.push({
       row: 0,
       col: idx,
-      choices: [C.ROOK, C.KING, C.PAWN],
+      choices: unique(availableChoices),
       team: C.DARK,
       key: `d${idx}`,
     });
     pieces.push({
       row: boardSize - 1,
       col: idx,
-      choices: [C.ROOK, C.KING, C.PAWN],
+      choices: unique(availableChoices),
       team: C.LIGHT,
       key: `l${idx}`,
     });
@@ -29,11 +33,12 @@ function makePieces(boardSize) {
 }
 
 function newGame(action) {
+  const availableChoices = [C.ROOK, C.KING, C.PAWN, C.PAWN];
   return {
     id: action.newGameId,
     boardSize: action.boardSize,
-    availableChoices: [C.ROOK, C.KING, C.PAWN, C.PAWN],
-    pieces: makePieces(action.boardSize),
+    availableChoices,
+    pieces: makePieces(action.boardSize, availableChoices),
     proposedPieces: null,
     playerTeam: C.LIGHT,
     selectedPieceKey: null,
