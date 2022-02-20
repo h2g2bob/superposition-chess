@@ -121,4 +121,18 @@ CAN_MOVE[C.BISHOP] = ({
   return true;
 };
 
+CAN_MOVE[C.KNIGHT] = ({
+  piece, row, col,
+}) => {
+  const moveCol = (col - piece.col);
+  const moveRow = (row - piece.row);
+  if (Math.abs(moveCol) === 2 && Math.abs(moveRow) === 1) {
+    return true;
+  }
+  if (Math.abs(moveCol) === 1 && Math.abs(moveRow) === 2) {
+    return true;
+  }
+  return false;
+};
+
 CAN_MOVE[C.QUEEN] = (args) => CAN_MOVE[C.ROOK](args) || CAN_MOVE[C.BISHOP](args);
