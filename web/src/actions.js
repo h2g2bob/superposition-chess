@@ -2,6 +2,8 @@ export const actions = {
   NEW_GAME: 'NEW_GAME',
   SELECT_PIECE: 'SELECT_PIECE',
   MOVE_PIECE: 'MOVE_PIECE',
+  COMMIT_MOVE: 'COMMIT_MOVE',
+  ROLLBACK_MOVE: 'ROLLBACK_MOVE',
 };
 
 export function newGameAction(newGameId, boardSize) {
@@ -25,5 +27,17 @@ export function moveOrTakeAction(pieceKey, row, col) {
     pieceKey,
     row,
     col,
+  };
+}
+
+export function commitMoveAction() {
+  return {
+    type: actions.COMMIT_MOVE,
+  };
+}
+
+export function rollbackMoveAction() {
+  return {
+    type: actions.ROLLBACK_MOVE,
   };
 }

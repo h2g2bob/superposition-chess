@@ -32,6 +32,7 @@ function newGame(action) {
     id: action.newGameId,
     boardSize: action.boardSize,
     pieces: makePieces(action.boardSize),
+    proposedPieces: null,
     playerTeam: C.LIGHT,
     selectedPieceKey: null,
   };
@@ -53,31 +54,49 @@ function updatePiece(pieces, key, update) {
 
 function movePiece(state, action) {
   const { pieceKey, row, col } = action;
-  const { pieces, boardSize, playerTeam } = state;
+  const { pieces, boardSize } = state;
   const [selectedPiece] = pieces.filter((piece) => piece.key === pieceKey);
+
+  if (!selectedPiece) {
+    throw Error('action.pieceKey is not the id of any piece');
+  }
 
   /* move/take allowed */
   const remainingPieceChoices = canMove(selectedPiece, pieces, row, col, boardSize);
   if (!remainingPieceChoices.length) {
-    return state;
+    return null;
   }
 
   const willTakePiece = pieceAt(pieces, row, col);
   if (willTakePiece) {
-    /* take */
-    return state;
+    /* take - not implemented yet */
+    return null;
   }
 
   /* move */
+  return updatePiece(pieces, pieceKey, {
+    row,
+    col,
+    choices: remainingPieceChoices,
+  });
+}
+
+function commitMove(state) {
+  const { playerTeam, proposedPieces } = state;
   return {
     ...state,
+    pieces: proposedPieces,
+    proposedPieces: null,
     selectedPieceKey: null,
-    pieces: updatePiece(pieces, pieceKey, {
-      row,
-      col,
-      choices: remainingPieceChoices,
-    }),
     playerTeam: otherTeam(playerTeam),
+  };
+}
+
+function rollbackMove(state) {
+  return {
+    ...state,
+    proposedPieces: null,
+    selectedPieceKey: null,
   };
 }
 
@@ -96,8 +115,11 @@ export default function configureStore(router, initialState = {}) {
           case actions.SELECT_PIECE:
             return { ...state, selectedPieceKey: action.pieceKey };
           case actions.MOVE_PIECE:
-            /* eslint-disable no-console */
-            return movePiece(state, action);
+            return { ...state, proposedPieces: movePiece(state, action) };
+          case actions.COMMIT_MOVE:
+            return commitMove(state);
+          case actions.ROLLBACK_MOVE:
+            return rollbackMove(state);
           default:
             return state;
         }

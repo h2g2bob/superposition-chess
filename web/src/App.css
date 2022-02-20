@@ -1,0 +1,22 @@
+.game_holder {
+  position: relative;
+}
+
+.game_holder .banner_button {
+  width: 80%;
+  height: 10%;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 4vmin;
+  position: absolute;
+  left: 10%;
+}
+
+.game_holder .commit_button {
+  top: 38%;
+}
+
+.game_holder .rollback_button {
+  top: 52%;
+}
+
