@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { router5Middleware, router5Reducer } from 'redux-router5';
 import { actions } from './actions';
 import { pieceAt, canMove } from './moves';
+import { limitPieceToRemainingPossibilities } from './moves_solve_remaining';
 import C from './constants';
 
 function makePieces(boardSize) {
@@ -31,6 +32,7 @@ function newGame(action) {
   return {
     id: action.newGameId,
     boardSize: action.boardSize,
+    availableChoices: [C.ROOK, C.KING, C.PAWN, C.PAWN],
     pieces: makePieces(action.boardSize),
     proposedPieces: null,
     playerTeam: C.LIGHT,
@@ -52,7 +54,7 @@ function updatePiece(pieces, key, update) {
   });
 }
 
-function movePiece(state, action) {
+function basicMovePiece(state, action) {
   const { pieceKey, row, col } = action;
   const { pieces, boardSize } = state;
   const [selectedPiece] = pieces.filter((piece) => piece.key === pieceKey);
@@ -79,6 +81,29 @@ function movePiece(state, action) {
     col,
     choices: remainingPieceChoices,
   });
+}
+
+function movePiece(state, action) {
+  const { availableChoices } = state;
+  const pieces = basicMovePiece(state, action);
+  if (pieces === null) {
+    return null;
+  }
+
+  // eg: if one piece moves like a queen, then no other piece can be the queen
+  const piecesLimitedByValidCombinations = pieces.map(
+    (piece) => limitPieceToRemainingPossibilities(
+      piece,
+      pieces.filter((teamPiece) => teamPiece.team === piece.team),
+      availableChoices,
+    ),
+  );
+  if (piecesLimitedByValidCombinations.some((piece) => piece.choices.length === 0)) {
+    /* eslint-disable no-console */
+    console.log('No valid combination');
+    return null;
+  }
+  return piecesLimitedByValidCombinations;
 }
 
 function commitMove(state) {
