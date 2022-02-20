@@ -81,19 +81,19 @@ CAN_MOVE[C.KING] = ({ piece, row, col }) => (
 CAN_MOVE[C.ROOK] = ({
   piece, pieces, row, col,
 }) => {
-  const moveCol = Math.sign(col - piece.col);
-  const moveRow = Math.sign(row - piece.row);
-  if (moveCol !== 0 && moveRow !== 0) {
+  const unitCol = Math.sign(col - piece.col);
+  const unitRow = Math.sign(row - piece.row);
+  if (unitCol !== 0 && unitRow !== 0) {
     return false;
   }
-  let checkRow = piece.row + moveRow;
-  let checkCol = piece.col + moveCol;
+  let checkRow = piece.row + unitRow;
+  let checkCol = piece.col + unitCol;
   while (checkRow !== piece.row && checkCol !== piece.col) {
     if (pieceAt(pieces, checkRow, checkCol)) {
       return false;
     }
-    checkRow += moveRow;
-    checkCol += moveCol;
+    checkRow += unitRow;
+    checkCol += unitCol;
   }
   return true;
 };
