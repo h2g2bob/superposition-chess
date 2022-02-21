@@ -30,6 +30,10 @@ function Home() {
         availableChoices={[C.KING, C.AMAZON, C.QUEEN, C.ROOK]}
       />
       <NewGameButton
+        label="KAAA"
+        availableChoices={[C.KING, C.AMAZON, C.AMAZON, C.AMAZON]}
+      />
+      <NewGameButton
         label="KKPP"
         availableChoices={[C.KING, C.EXTRAKING, C.PAWN, C.PAWN]}
       />
