@@ -15,6 +15,8 @@ import imgqd from './images/Chess_qdt45.svg';
 import imgql from './images/Chess_qlt45.svg';
 import imgrd from './images/Chess_rdt45.svg';
 import imgrl from './images/Chess_rlt45.svg';
+import imgad from './images/Chess_Adt26.svg';
+import imgal from './images/Chess_Alt26.svg';
 
 const IMAGES = {};
 IMAGES[C.DARK] = {};
@@ -24,6 +26,7 @@ IMAGES[C.DARK][C.KNIGHT] = imgnd;
 IMAGES[C.DARK][C.PAWN] = imgpd;
 IMAGES[C.DARK][C.QUEEN] = imgqd;
 IMAGES[C.DARK][C.ROOK] = imgrd;
+IMAGES[C.DARK][C.AMAZON] = imgad;
 IMAGES[C.LIGHT] = {};
 IMAGES[C.LIGHT][C.BISHOP] = imgbl;
 IMAGES[C.LIGHT][C.KING] = imgkl;
@@ -31,6 +34,7 @@ IMAGES[C.LIGHT][C.KNIGHT] = imgnl;
 IMAGES[C.LIGHT][C.PAWN] = imgpl;
 IMAGES[C.LIGHT][C.QUEEN] = imgql;
 IMAGES[C.LIGHT][C.ROOK] = imgrl;
+IMAGES[C.LIGHT][C.AMAZON] = imgal;
 
 function ChessPiece({ pieces, team }) {
   return (

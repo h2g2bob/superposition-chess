@@ -8,6 +8,7 @@ const constants = {
   PAWN: 'p',
   QUEEN: 'q',
   ROOK: 'r',
+  AMAZON: 'a',
 };
 
 export default constants;
