@@ -20,6 +20,9 @@ function Game({
   const dispatch = useDispatch();
   const cellSizeVMin = 90 / (boardSize + 1);
 
+  const takenPieces = pieces.filter((piece) => piece.row === -1);
+  takenPieces.sort((a, b) => b.takenAt - a.takenAt); // in-place
+
   return (
     <div className="game">
       <Board
@@ -58,7 +61,7 @@ function Game({
       }
       <div className="under_board">
         <PiecesList
-          pieces={pieces.filter((piece) => piece.row === -1)}
+          pieces={takenPieces}
           sizeVMin={cellSizeVMin}
         />
       </div>

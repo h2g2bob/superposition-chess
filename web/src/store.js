@@ -19,6 +19,7 @@ function makePieces(boardSize, availableChoices) {
       choices: unique(availableChoices),
       team: C.DARK,
       key: `d${idx}`,
+      takenAt: null,
     });
     pieces.push({
       row: boardSize - 1,
@@ -26,6 +27,7 @@ function makePieces(boardSize, availableChoices) {
       choices: unique(availableChoices),
       team: C.LIGHT,
       key: `l${idx}`,
+      takenAt: null,
     });
   }
 
@@ -91,6 +93,7 @@ function basicMovePiece(state, action) {
     newPieces = updatePiece(newPieces, willTakePiece.key, {
       row: -1,
       col: -1,
+      takenAt: Date.now(),
     });
   }
 
