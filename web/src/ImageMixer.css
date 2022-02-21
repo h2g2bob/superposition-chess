@@ -1,9 +1,9 @@
 div.stack {
   display: inline-block;
   position: relative;
-  width: 15vmin;
-  height: 15vmin;
   background: inherit;
+  padding: 0px;
+  margin: 0px;
 }
 
 div.stack > img {

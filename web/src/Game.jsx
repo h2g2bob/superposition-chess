@@ -17,8 +17,7 @@ function Game({
   const dispatch = useDispatch();
 
   return (
-    <div>
-      hello world
+    <div className="game">
       <Board
         size={boardSize}
         pieces={pieces}

@@ -40,11 +40,13 @@ IMAGES[C.LIGHT][C.ROOK] = imgrl;
 IMAGES[C.LIGHT][C.EXTRAKING] = imgxl;
 IMAGES[C.LIGHT][C.AMAZON] = imgal;
 
-function ChessPiece({ pieces, team }) {
+function ChessPiece({ pieces, team, size }) {
   return (
-    <ImageMixer images={
-      pieces.map((piece) => IMAGES[team][piece])
-    }
+    <ImageMixer
+      size={size}
+      images={
+        pieces.map((piece) => IMAGES[team][piece])
+      }
     />
   );
 }
@@ -52,6 +54,7 @@ function ChessPiece({ pieces, team }) {
 ChessPiece.propTypes = {
   team: PropTypes.string,
   pieces: PropTypes.arrayOf(PropTypes.string).isRequired,
+  size: PropTypes.string.isRequired,
 };
 
 ChessPiece.defaultProps = {

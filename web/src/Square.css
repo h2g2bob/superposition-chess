@@ -1,5 +1,7 @@
 .square {
-
+  margin: 0px;
+  padding: 0px;
+  display: inline-block;
 }
 
 .square.square-l {

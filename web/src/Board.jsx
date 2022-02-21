@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Square from './Square';
 import { pieceAt } from './moves';
+import './Board.css';
 
 function makeArray(start, lessThan) {
   const a = [];
@@ -28,6 +29,7 @@ function Board({
         pieces={piece ? piece.choices : []}
         background={(i + j) % 2 ? 'd' : 'l'}
         highlight={highlight}
+        sizeVMin={90 / size}
         onClick={() => selectSquare(i, j)}
       />
     );
