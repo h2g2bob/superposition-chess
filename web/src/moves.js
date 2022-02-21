@@ -135,5 +135,6 @@ CAN_MOVE[C.KNIGHT] = ({
   return false;
 };
 
+CAN_MOVE[C.EXTRAKING] = (args) => CAN_MOVE[C.KING](args);
 CAN_MOVE[C.QUEEN] = (args) => CAN_MOVE[C.ROOK](args) || CAN_MOVE[C.BISHOP](args);
 CAN_MOVE[C.AMAZON] = (args) => CAN_MOVE[C.QUEEN](args) || CAN_MOVE[C.KNIGHT](args);

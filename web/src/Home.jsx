@@ -29,6 +29,14 @@ function Home() {
         label="KAQR"
         availableChoices={[C.KING, C.AMAZON, C.QUEEN, C.ROOK]}
       />
+      <NewGameButton
+        label="KKPP"
+        availableChoices={[C.KING, C.EXTRAKING, C.PAWN, C.PAWN]}
+      />
+      <NewGameButton
+        label="KKKK"
+        availableChoices={[C.KING, C.EXTRAKING, C.EXTRAKING, C.EXTRAKING]}
+      />
     </div>
   );
 }
