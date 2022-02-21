@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import Board from './Board';
+import PiecesList from './PiecesList';
 import { pieceAt } from './moves';
 import { selectPieceAction, moveOrTakeAction } from './actions';
 import C from './constants';
+import './Game.css';
 
 /* eslint-disable no-console */
 function Game({
@@ -15,12 +17,14 @@ function Game({
 }) {
   const [selectedPiece] = pieces.filter((piece) => piece.key === selectedPieceKey);
   const dispatch = useDispatch();
+  const cellSizeVMin = 90 / (boardSize + 1);
 
   return (
     <div className="game">
       <Board
         size={boardSize}
         pieces={pieces}
+        cellSizeVMin={cellSizeVMin}
         selectedPiece={selectedPiece}
         selectSquare={(i, j) => {
           const pieceAtIJ = pieceAt(pieces, i, j);
@@ -36,10 +40,16 @@ function Game({
           }
         }}
       />
-      <div>
+      <div className="next_player">
         {
           playerTeam === C.LIGHT ? 'WHITE to play' : 'BLACK to play'
         }
+      </div>
+      <div className="under_board">
+        <PiecesList
+          pieces={pieces.filter((piece) => piece.row === -1)}
+          sizeVMin={cellSizeVMin}
+        />
       </div>
     </div>
   );

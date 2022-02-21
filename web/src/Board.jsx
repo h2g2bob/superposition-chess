@@ -14,7 +14,7 @@ function makeArray(start, lessThan) {
 }
 
 function Board({
-  pieces, selectedPiece, selectSquare, size,
+  pieces, selectedPiece, selectSquare, size, cellSizeVMin,
 }) {
   function square(i, j) {
     const piece = pieceAt(pieces, i, j);
@@ -29,7 +29,7 @@ function Board({
         pieces={piece ? piece.choices : []}
         background={(i + j) % 2 ? 'd' : 'l'}
         highlight={highlight}
-        sizeVMin={90 / size}
+        sizeVMin={cellSizeVMin}
         onClick={() => selectSquare(i, j)}
       />
     );
@@ -58,6 +58,7 @@ Board.propTypes = {
   selectedPiece: PropTypes.object,
   selectSquare: PropTypes.func.isRequired,
   size: PropTypes.number.isRequired,
+  cellSizeVMin: PropTypes.number.isRequired,
 };
 
 Board.defaultProps = {

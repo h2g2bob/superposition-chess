@@ -2,3 +2,9 @@
   padding: 0px;
   margin: 0px;
 }
+
+.under_board {
+  width: 100%;
+  white-space: nowrap;
+  overflow-x: auto;
+}
