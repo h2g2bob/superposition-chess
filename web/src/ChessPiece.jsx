@@ -62,3 +62,17 @@ ChessPiece.defaultProps = {
 };
 
 export default ChessPiece;
+
+const NAMES = {};
+NAMES[C.KING] = 'King';
+NAMES[C.QUEEN] = 'Queen';
+NAMES[C.ROOK] = 'Rook';
+NAMES[C.BISHOP] = 'Bishop';
+NAMES[C.KNIGHT] = 'Knight';
+NAMES[C.PAWN] = 'Pawn';
+NAMES[C.EXTRAKING] = 'False King';
+NAMES[C.AMAZON] = 'Amazon';
+
+export function pieceName(constant) {
+  return NAMES[constant];
+}

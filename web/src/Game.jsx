@@ -5,6 +5,7 @@ import Board from './Board';
 import PiecesList from './PiecesList';
 import { pieceAt } from './moves';
 import { selectPieceAction, moveOrTakeAction } from './actions';
+import { pieceName } from './ChessPiece';
 import C from './constants';
 import './Game.css';
 
@@ -40,11 +41,21 @@ function Game({
           }
         }}
       />
-      <div className="next_player">
-        {
-          playerTeam === C.LIGHT ? 'WHITE to play' : 'BLACK to play'
-        }
-      </div>
+      {
+        selectedPiece ? (
+          <div className="describe_piece">
+            {
+              selectedPiece.choices.map((choice) => pieceName(choice)).join('-')
+            }
+          </div>
+        ) : (
+          <div className="next_player">
+            {
+              playerTeam === C.LIGHT ? 'WHITE to play' : 'BLACK to play'
+            }
+          </div>
+        )
+      }
       <div className="under_board">
         <PiecesList
           pieces={pieces.filter((piece) => piece.row === -1)}
