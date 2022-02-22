@@ -1,6 +1,6 @@
 import C from './constants';
 
-export function pieceAt(pieces, i, j) {
+export function pieceAt(pieces: any[], i: number, j: number): any {
   const maybePieceList = pieces.filter((piece) => piece.row === i && piece.col === j);
   if (i === null) {
     return null;
