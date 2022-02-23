@@ -32,10 +32,6 @@ function Home() {
         availableChoices={[C.KING, C.AMAZON, C.QUEEN, C.ROOK]}
       />
       <NewGameButton
-        label="KAAA"
-        availableChoices={[C.KING, C.AMAZON, C.AMAZON, C.AMAZON]}
-      />
-      <NewGameButton
         label="KKPP"
         availableChoices={[C.KING, C.EXTRAKING, C.PAWN, C.PAWN]}
       />
@@ -54,6 +50,26 @@ function Home() {
       <NewGameButton
         label="KQRBNP"
         availableChoices={[C.KING, C.QUEEN, C.ROOK, C.BISHOP, C.KNIGHT, C.PAWN]}
+      />
+      <NewGameButton
+        label="KRBPP"
+        availableChoices={[C.KING, C.ROOK, C.BISHOP, C.PAWN, C.PAWN]}
+      />
+      <NewGameButton
+        label="KQRBPP"
+        availableChoices={[C.KING, C.QUEEN, C.ROOK, C.BISHOP, C.PAWN, C.PAWN]}
+      />
+      <NewGameButton
+        label="KRRBBPP"
+        availableChoices={[C.KING, C.ROOK, C.ROOK, C.BISHOP, C.BISHOP, C.PAWN, C.PAWN]}
+      />
+      <NewGameButton
+        label="KQRRBBPP"
+        availableChoices={[C.KING, C.QUEEN, C.ROOK, C.ROOK, C.BISHOP, C.BISHOP, C.PAWN, C.PAWN]}
+      />
+      <NewGameButton
+        label="KAAAAAA"
+        availableChoices={[C.KING, C.AMAZON, C.AMAZON, C.AMAZON, C.AMAZON, C.AMAZON, C.AMAZON]}
       />
     </div>
   );
