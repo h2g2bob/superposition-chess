@@ -1,12 +1,14 @@
 import React from 'react';
 import NewGameButton from './NewGameButton';
 import C from './constants';
+import './Home.css';
 
 function Home() {
   return (
-    <div>
+    <div className="new_game_options_list">
+      <div style={{ 'text-align': 'center' }}>New game</div>
       <NewGameButton
-        label="New game"
+        label="KRPP"
         availableChoices={[C.KING, C.ROOK, C.PAWN, C.PAWN]}
       />
       <NewGameButton
