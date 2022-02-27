@@ -22,6 +22,7 @@
     "react-uuid": "^1.0.2",
     "redux": "^4.1.2",
     "redux-router5": "^8.0.1",
+    "redux-thunk": "^2.4.1",
     "router5": "^8.0.1",
     "router5-plugin-browser": "^8.0.1",
     "router5-plugin-logger": "^8.0.1",

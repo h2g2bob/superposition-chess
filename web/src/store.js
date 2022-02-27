@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { router5Middleware, router5Reducer } from 'redux-router5';
+import thunk from 'redux-thunk';
 import { actions } from './actions';
 import { pieceAt, canMove } from './moves.ts';
 import { limitPieceToRemainingPossibilities } from './moves_solve_remaining';
@@ -169,6 +170,7 @@ function rollbackMove(state) {
 export default function configureStore(router, initialState = {}) {
   const createStoreWithMiddleware = applyMiddleware(
     router5Middleware(router),
+    thunk,
   )(createStore);
 
   const store = createStoreWithMiddleware(
