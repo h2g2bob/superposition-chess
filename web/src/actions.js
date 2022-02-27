@@ -14,6 +14,13 @@ export function newGameAction(newGameId, availableChoices) {
   };
 }
 
+export function newGameAfterDelayAction(newGameId, availableChoices) {
+  return (dispatch) => setTimeout(
+    () => dispatch(newGameAction(newGameId, availableChoices)),
+    1000,
+  );
+}
+
 export function selectPieceAction(pieceKey) {
   return {
     type: actions.SELECT_PIECE,
