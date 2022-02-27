@@ -1,16 +1,16 @@
 import React from 'react';
 import { connect, useSelector, useDispatch } from 'react-redux';
 import { createRouteNodeSelector } from 'redux-router5';
-
 import Home from './Home';
 import Game from './Game';
+import Test from './Test';
 import { commitMoveAction, rollbackMoveAction } from './actions';
 
 import './App.css';
 
 /* eslint-disable react/prop-types */
 /* eslint-disable no-console */
-function App() {
+function App({ route }) {
   const dispatch = useDispatch();
   const game = useSelector((state) => state.game);
   useSelector((state) => console.log(state));
@@ -43,6 +43,14 @@ function App() {
       </div>
     );
   }
+
+  const { name } = route;
+  if (name === 'test') {
+    return (
+      <Test />
+    );
+  }
+
   return <Home />;
 }
 
