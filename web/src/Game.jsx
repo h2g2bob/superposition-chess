@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import Board from './Board';
 import PiecesList from './PiecesList';
-import { pieceAt } from './moves';
+import { pieceAt } from './moves.ts';
 import { selectPieceAction, moveOrTakeAction } from './actions';
 import { pieceName } from './ChessPiece';
 import C from './constants';

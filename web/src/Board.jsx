@@ -2,7 +2,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Square from './Square';
-import { pieceAt } from './moves';
+import { pieceAt } from './moves.ts';
 import './Board.css';
 
 function makeArray(start, lessThan) {

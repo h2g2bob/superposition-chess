@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { router5Middleware, router5Reducer } from 'redux-router5';
 import { actions } from './actions';
-import { pieceAt, canMove } from './moves';
+import { pieceAt, canMove } from './moves.ts';
 import { limitPieceToRemainingPossibilities } from './moves_solve_remaining';
 import C from './constants';
 
