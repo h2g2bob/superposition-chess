@@ -15,10 +15,18 @@ export function newGameAction(newGameId, availableChoices) {
 }
 
 export function newGameAfterDelayAction(newGameId, availableChoices) {
-  return (dispatch) => setTimeout(
-    () => dispatch(newGameAction(newGameId, availableChoices)),
-    1000,
-  );
+  return (dispatch) => fetch('https://chess.dbatley.com/hacks/ip.php')
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.text();
+    })
+    .then((text) => {
+      /* eslint-disable no-console */
+      console.log(text);
+      dispatch(newGameAction(newGameId, availableChoices));
+    });
 }
 
 export function selectPieceAction(pieceKey) {
