@@ -7,12 +7,13 @@ function PiecesList({ pieces, sizeVMin }) {
     <div className="pieces_list">
       {
         pieces.map((piece) => {
-          const { team, choices } = piece;
+          const { team, choices, key } = piece;
           return (
             <ChessPiece
               team={team}
               pieces={choices}
               size={`${sizeVMin}vmin`}
+              key={key}
             />
           );
         })
