@@ -1,0 +1,15 @@
+{
+  "name": "chess-websocket",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "author": "",
+  "license": "",
+  "dependencies": {
+    "socket.io": "^4.4.1"
+  }
+}
