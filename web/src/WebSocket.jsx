@@ -9,10 +9,12 @@ const WebSocketContext = createContext(null);
 
 /* eslint-disable no-console */
 function WebSocket({ children }) {
-  let socket;
-  let ws;
-
   // const dispatch = useDispatch();
+
+  const socket = io.connect(WS_BASE);
+  socket.on('event://get-message', (msg) => {
+    console.log(msg);
+  });
 
   /* nothing is conected up yet, so we can only send messages into the void
    * where they might get logged, possibly
@@ -24,17 +26,12 @@ function WebSocket({ children }) {
     socket.emit('event://send-into-void', JSON.stringify(payload));
   };
 
-  if (!socket) {
-    socket = io.connect(WS_BASE);
-    socket.on('event://get-message', (msg) => {
-      console.log(msg);
-    });
-
-    ws = {
-      socket,
-      sendIntoVoid,
-    };
-  }
+  /* Sadly, I think the example code does re-connect every time */
+  /* eslint-disable react/jsx-no-constructed-context-values */
+  const ws = {
+    socket,
+    sendIntoVoid,
+  };
 
   return (
     <WebSocketContext.Provider value={ws}>
