@@ -1,22 +1,35 @@
+/* eslint-disable no-console */
+
 import React, { createContext } from 'react';
 import PropTypes from 'prop-types';
 import io from 'socket.io-client';
 
-const WS_BASE = '/socket.io/';
+const WS_BASE = 'ws://localhost:3001/';
+const WS_OPT = {
+  path: '/socket.io/',
+};
 
 const WebSocketContext = createContext(null);
 
 class WebSocket extends React.Component {
+  constructor(props) {
+    super(props);
+
+    const ws = {
+      sendIntoVoid: (msg) => this.sendIntoVoid(msg),
+    };
+    this.state = {
+      ws,
+    };
+  }
+
   componentDidMount() {
-    const socket = io.connect(WS_BASE);
+    const socket = io.connect(WS_BASE, WS_OPT);
+    console.log('io.connect');
     socket.on('event://get-message', (msg) => {
-      /* eslint-disable no-console */
       console.log(msg);
     });
-    const ws = {
-      sendIntoVoid: this.sendIntoVoid,
-    };
-    this.setState({ socket, ws });
+    this.setState({ socket });
   }
 
   componentWillUnmount() {
@@ -28,11 +41,12 @@ class WebSocket extends React.Component {
     /* nothing is conected up yet, so we can only send messages into the void
      * where they might get logged, possibly
      */
+    console.log(`Send into void: ${msg}`);
     const { socket } = this.state;
     const payload = {
       msg,
     };
-    socket.emit('event://send-into-void', JSON.stringify(payload));
+    socket.emit('send-into-void', JSON.stringify(payload));
   }
 
   render() {
@@ -46,8 +60,9 @@ class WebSocket extends React.Component {
   }
 }
 
+/* eslint-disable react/forbid-prop-types */
 WebSocket.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.any.isRequired,
 };
 
 export { WebSocketContext };
